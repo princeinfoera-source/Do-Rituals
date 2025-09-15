@@ -52,16 +52,23 @@ function Sidebar({ role, isOpen, onClose }) {
         <div
           onClick={onClose}
           className="fixed inset-0 bg-black bg-opacity-40 md:hidden z-40"
+          aria-hidden="true"
         />
       )}
 
       <nav
         className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-900 text-gray-200 flex flex-col shadow-lg transform transition-transform duration-300 z-50
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
+        aria-label="Sidebar navigation"
       >
+        {/* Mobile header with close button */}
         <div className="flex items-center justify-between p-4 border-b border-gray-700 md:hidden">
           <h2 className="text-lg font-bold">Menu</h2>
-          <button onClick={onClose}>
+          <button
+            onClick={onClose}
+            aria-label="Close menu"
+            className="p-1 rounded hover:bg-gray-700"
+          >
             <X size={22} />
           </button>
         </div>
@@ -79,6 +86,7 @@ function Sidebar({ role, isOpen, onClose }) {
                   }`
                 }
                 end={path === ""}
+                onClick={onClose} // Close sidebar on link click (mobile)
               >
                 {icon}
                 <span>{label}</span>

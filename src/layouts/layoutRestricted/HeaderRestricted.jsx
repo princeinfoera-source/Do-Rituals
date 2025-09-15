@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Moon, Sun, LogOut, Menu } from "lucide-react";
 import logo from "../../assets/imgs/doRituals.webp";
 
-const Header = ({ onMenuClick }) => {
+const HeaderRestricted = ({ onMenuClick }) => {
   const { role } = useRole();
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(false);
@@ -22,7 +22,7 @@ const Header = ({ onMenuClick }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("role");
-    navigate("/dashboard-login");
+    navigate("/dashboard");
   };
 
   // Close dropdown when clicking outside
@@ -48,6 +48,7 @@ const Header = ({ onMenuClick }) => {
         <button
           onClick={onMenuClick}
           className="md:hidden p-2 rounded hover:bg-gray-700 transition"
+          aria-label="Open menu"
         >
           <Menu size={22} />
         </button>
@@ -66,6 +67,7 @@ const Header = ({ onMenuClick }) => {
           <button
             onClick={() => setDarkMode(!darkMode)}
             className="p-2 rounded-full hover:bg-gray-700 transition"
+            aria-label="Toggle dark mode"
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
@@ -102,4 +104,4 @@ const Header = ({ onMenuClick }) => {
   );
 };
 
-export default Header;
+export default HeaderRestricted;
