@@ -1,0 +1,6 @@
+.rotate-on-hover {
+  transition: transform 0.6s cubic-bezier(.25,1.7,.25,.95);
+}
+.rotate-on-hover:hover {
+  transform: rotate(360deg);
+}
