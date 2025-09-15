@@ -1,6 +1,6 @@
 import { useLocation, useParams } from "react-router-dom";
 import { FaClock, FaPhone, FaUserTie } from "react-icons/fa";
-import templeData from "../store/templeSampleData";
+import { templeData } from "../store/templeSampleData";
 import "./style.css";
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();

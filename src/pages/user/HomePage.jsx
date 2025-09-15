@@ -1,218 +1,110 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomePageImg from "../../assets/imgs/HomePageImg.png";
 import DownloadAppSection from "../../components/DownloadAppSection.jsx";
 import TempleCard from "../../components/TempleCard.jsx";
 import Button from "../../components/ExploreAnimatedButton.jsx";
+import { testimonials, templesData, servicesData, donationData } from "../../store/templeSampleData.js";
+import "../style.css";
+import ScrollingBanner from "./ScrollingBanner.jsx";
 
 import {
   FaStar,
-  FaHandshake,
-  FaOm,
-  FaGlobe,
-  FaBook,
-  FaHeart,
-  FaRegLightbulb,
-  FaPrayingHands,
-  FaTree,
-  FaUsers,
-  FaLandmark,
-  FaSeedling,
+  FaShoppingCart,
+  FaRupeeSign,
+  FaClock,
+  FaHeadset,
+  FaShieldAlt,
+  FaTruck,
   FaChevronLeft,
   FaChevronRight,
   FaQuoteLeft,
-  FaHandsHelping,
 } from "react-icons/fa";
-import kashiTemnple from "../../assets/imgs/temp/Kashi Vishwanath Temple.jpg";
-import meenakshiTemple from "../../assets/imgs/temp/Meenakshi Amman Temple.jpg";
-import jagannathTemple from "../../assets/imgs/temp/Jagannath Temple.jpg";
+
 const features = [
   {
-    icon: <FaHandshake className="text-4xl text-orange-600 mb-4" />,
-    title: "Authentic & Verified",
+    icon: <FaShieldAlt className="text-4xl text-orange-600 mb-4" />,
+    title: "Verified & Authentic",
     description:
-      "We partner only with verified priests, pundits, and temples to ensure genuine spiritual experiences.",
+      "All our priests and temples are thoroughly verified to ensure authentic spiritual experiences.",
   },
   {
-    icon: <FaOm className="text-4xl text-orange-600 mb-4" />,
-    title: "Seamless Rituals",
+    icon: <FaShoppingCart className="text-4xl text-orange-600 mb-4" />,
+    title: "Easy Booking",
     description:
-      "Book online pujas, havans, and rituals from anywhere in the world with ease and convenience.",
+      "Book pujas and services with our simple, secure checkout process in just a few clicks.",
   },
   {
-    icon: <FaGlobe className="text-4xl text-orange-600 mb-4" />,
-    title: "Global Community",
+    icon: <FaTruck className="text-4xl text-orange-600 mb-4" />,
+    title: "Prasad Delivery",
     description:
-      "Connect with a global community and explore temples and traditions from different regions of India.",
+      "Get sacred prasad delivered to your doorstep with our reliable delivery network.",
   },
   {
-    icon: <FaBook className="text-4xl text-orange-600 mb-4" />,
-    title: "Spiritual Library",
+    icon: <FaRupeeSign className="text-4xl text-orange-600 mb-4" />,
+    title: "Transparent Pricing",
     description:
-      "Access a rich library of ancient texts, mantras, and spiritual discourses to deepen your knowledge.",
+      "No hidden costs. Clear pricing for all services with multiple payment options.",
   },
   {
-    icon: <FaStar className="text-4xl text-orange-600 mb-4" />,
-    title: "Personalized Guidance",
+    icon: <FaClock className="text-4xl text-orange-600 mb-4" />,
+    title: "Quick Service",
     description:
-      "Receive personalized astrology readings and spiritual guidance tailored to your specific needs.",
+      "Most pujas are performed within 24 hours of booking with live updates.",
   },
   {
-    icon: <FaHeart className="text-4xl text-orange-600 mb-4" />,
-    title: "Dedicated Support",
+    icon: <FaHeadset className="text-4xl text-orange-600 mb-4" />,
+    title: "24/7 Support",
     description:
-      "Our dedicated support team is available 24/7 to assist you on your spiritual journey.",
+      "Our dedicated support team is available round the clock to assist you.",
   },
 ];
 
-const testimonials = [
+const popularServices = [
   {
-    name: "Priya Sharma",
-    quote:
-      "Vama has brought a new level of peace and convenience to my spiritual practices. The aarti services are incredibly well-organized and truly divine. It's a blessing to connect with my faith so easily from home.",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    name: "Rajesh Kumar",
-    quote:
-      "I was skeptical at first, but the live darshan feature is an amazing experience. The pandit ji's prayers were so heartfelt, and I felt the positive energy radiating through the screen. A truly a must-have app for every devotee.",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    name: "Anjali Singh",
-    quote:
-      "The personalized puja services are a game-changer. I was able to perform a ritual for my family's well-being with a real pandit, and the entire process was seamless. Thank you, Vama, for this wonderful platform!",
-    avatar: "https://randomuser.me/api/portraits/women/50.jpg",
-  },
-  {
-    name: "Kiran Patel",
-    quote:
-      "I've always wanted to learn more about my rituals. This platform's guidance is exceptional. The explanations are easy to follow, and the community is very supportive. I highly recommend it!",
-    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-  },
-  {
-    name: "Manoj Das",
-    quote:
-      "This service is a beacon of light in my busy life. The ease of booking a puja and receiving sacred prasad at my doorstep is unparalleled. It feels like the temple is right here with me. Thank you!",
-    avatar: "https://randomuser.me/api/portraits/men/47.jpg",
-  },
-];
-
-const templesData = [
-  {
-    id: 1,
-    name: "Kashi Vishwanath Temple",
-    poojaType: "Shiva Abhishekam",
-    address: "Varanasi, Uttar Pradesh",
-    image: kashiTemnple,
-    link: "/temples/1",
+    name: "Maha Rudrabhishek",
+    price: "₹1,251",
+    originalPrice: "₹1,500",
     rating: 4.9,
-    description:
-      "Famous Hindu temple dedicated to Lord Shiva in Varanasi on the Ganga; one of the twelve Jyotirlingas.",
+    bookings: "1.2k+",
+    image: "https://placehold.co/300x200/FFE4C4/000?text=Maha+Rudrabhishek",
   },
   {
-    id: 2,
-    name: "Meenakshi Amman Temple",
-    poojaType: "Special Navaratri Pooja",
-    address: "Madurai, Tamil Nadu",
-    image: meenakshiTemple,
-    link: "/temples/2",
+    name: "Sundarkand Path",
+    price: "₹751",
+    originalPrice: "₹900",
     rating: 4.8,
-    description:
-      "A historic Hindu temple located on the southern bank of the Vaigai River in the temple city of Madurai.",
+    bookings: "980+",
+    image: "https://placehold.co/300x200/E6E6FA/000?text=Sundarkand+Path",
   },
   {
-    id: 3,
-    name: "Jagannath Temple",
-    poojaType: "Rath Yatra Special",
-    address: "Puri, Odisha",
-    image: jagannathTemple,
-    link: "/temples/3",
+    name: "Grah Shanti Puja",
+    price: "₹2,100",
+    originalPrice: "₹2,500",
     rating: 4.7,
-    description:
-      "An important Hindu temple dedicated to Jagannath, a form of Krishna. It is located in Puri, Odisha.",
+    bookings: "850+",
+    image: "https://placehold.co/300x200/FFF8E1/000?text=Grah+Shanti+Puja",
   },
+  {
+    name: "Satyanarayan Katha",
+    price: "₹1,100",
+    originalPrice: "₹1,350",
+    rating: 4.9,
+    bookings: "1.5k+",
+    image: "https://placehold.co/300x200/F0FFF0/000?text=Satyanarayan+Katha",
+  },
+];
+  
+const offers = [
+  "Flat 25% OFF on Maha Rudrabhishek",
+  "Get Free Prasad Delivery for orders above ₹1000",
+  "Book Sundarkand Path and Save 15%",
+  "Limited Time Offer: Satyanarayan Katha at ₹1100 only",
+  "Exclusive: Grah Shanti Puja with live updates",
+  "Special Discount on Temple Merchandise",
 ];
 
-const servicesData = [
-  {
-    icon: <FaPrayingHands className="text-4xl text-orange-600" />,
-    title: "Pooja Booking & Live Darshan",
-    description:
-      "Book your pooja online and experience live darshan from anywhere in the world.",
-  },
-  {
-    icon: <FaOm className="text-4xl text-orange-600" />,
-    title: "Prasad & Homa Delivery",
-    description:
-      "Receive sacred prasad and homa offerings delivered directly to your doorstep.",
-  },
-  {
-    icon: <FaGlobe className="text-4xl text-orange-600" />,
-    title: "Connect with Temples",
-    description:
-      "Discover and connect with a vast network of verified temples across India and beyond.",
-  },
-  {
-    icon: <FaStar className="text-4xl text-orange-600" />,
-    title: "Astrology & Guidance",
-    description:
-      "Get personalized spiritual guidance and astrology readings from renowned experts.",
-  },
-  {
-    icon: <FaBook className="text-4xl text-orange-600" />,
-    title: "Vedic Learning & Workshops",
-    description:
-      "Participate in online classes and workshops to deepen your understanding of scriptures.",
-  },
-  {
-    icon: <FaHeart className="text-4xl text-orange-600" />,
-    title: "Dedicated Community Support",
-    description:
-      "Join a vibrant community and receive dedicated support on your spiritual journey.",
-  },
-  {
-    icon: <FaRegLightbulb className="text-4xl text-orange-600" />,
-    title: "Spiritual Insights",
-    description:
-      "Gain deeper spiritual insights through articles, discourses, and expert talks.",
-  },
-  {
-    icon: <FaLandmark className="text-4xl text-orange-600" />,
-    title: "Customized Pilgrimages",
-    description:
-      "Plan and book personalized spiritual tours to revered temples and holy sites.",
-  },
-  {
-    icon: <FaHandsHelping className="text-4xl text-orange-600" />, // 👈 new icon
-    title: "Charity & Seva Programs",
-    description:
-      "Contribute to temple charities and participate in seva programs for the community.",
-  },
-];
-
-const donationData = [
-  {
-    icon: <FaTree className="text-5xl text-orange-600 mb-4" />,
-    title: "Temple & Heritage Preservation",
-    description:
-      "Help us preserve ancient temples and their rich cultural heritage for future generations.",
-  },
-  {
-    icon: <FaUsers className="text-5xl text-orange-600 mb-4" />,
-    title: "Community & Welfare",
-    description:
-      "Support the well-being of priests and temple staff through our dedicated welfare programs.",
-  },
-  {
-    icon: <FaSeedling className="text-5xl text-orange-600 mb-4" />,
-    title: "Spiritual Education",
-    description:
-      "Contribute to initiatives that promote Vedic learning and spiritual knowledge across the globe.",
-  },
-];
 
 const HomePage = () => {
-
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const goToNextSlide = () => {
@@ -227,167 +119,116 @@ const HomePage = () => {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative h-screen flex flex-col justify-center items-center text-white text-center px-6 bg-cover bg-center "
-        style={{
-          backgroundImage: `url(${HomePageImg})`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black opacity-50"></div>{" "}
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-extrabold mb-4 animate-fadeInDown">
-            Your Divine Connection, Anywhere, Anytime
-          </h1>
-          <p className="text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp">
-            Discover and book divine poojas, live darshans, and spiritual
-            services from the comfort of your home.
-          </p>
-          <Button href="/temples" className="animate-fadeInScale">
-            Explore Temples
-          </Button>
-        </div>
-      </section>
+      {/* Hero Section with E-commerce Feel */}
+<section
+  className="relative h-screen flex flex-col justify-center items-center text-white text-center px-6 bg-cover bg-center"
+  style={{
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${HomePageImg})`,
+  }}
+>
+  <div className="relative z-10 max-w-4xl mx-auto">
+    <h1 className="text-5xl md:text-6xl font-extrabold mb-4 animate-fadeInDown">
+      Divine Services, Delivered to You
+    </h1>
+    <p className="text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp">
+      Book authentic temple pujas, get prasad delivered, and experience spiritual services from trusted temples across India.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInScale">
+      <Button href="/services" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg">
+        Browse Services
+      </Button>
+      <Button href="/temples" className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-4 rounded-lg font-bold text-lg border border-orange-600">
+        Explore Temples
+      </Button>
+    </div>
+  </div>
+
+  {/* Place ScrollingBanner here at the end of section */}
+  <div className="absolute bottom-0 left-0 w-full z-10">
+  <ScrollingBanner />
+</div>
+
+
+</section>
+
 
       <div className="bg-gradient-to-b from-white via-orange-50 via-60% via-yellow-50 to-white">
+        {/* Popular Services Section */}
+        <section className="EComm relative py-16 px-6 bg-white">
+          <div className="container mx-auto">
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+                Popular Services
+              </h2>
+              <a href="/services" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
+                View All <FaChevronRight className="ml-1" />
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {popularServices.map((service, index) => (
+                <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                  <div className="relative">
+                    <img src={service.image} alt={service.name} className="w-full h-48 object-cover" />
+                    <div className="absolute top-2 right-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
+                      Popular
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg mb-2">{service.name}</h3>
+                    <div className="flex items-center mb-2">
+                      <span className="text-2xl font-bold text-orange-600">{service.price}</span>
+                      <span className="ml-2 text-sm text-gray-500 line-through">{service.originalPrice}</span>
+                    </div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <FaStar key={i} className={`text-yellow-400 ${i < Math.floor(service.rating) ? "fill-current" : "text-gray-300"}`} />
+                        ))}
+                        <span className="ml-1 text-sm text-gray-600">({service.rating})</span>
+                      </div>
+                      <span className="text-sm text-gray-600">{service.bookings} booked</span>
+                    </div>
+                    <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
+                      <FaShoppingCart className="mr-2" /> Book Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Featured Temples Section */}
-        <section className="relative py-24 px-6">
-          <div className="container mx-auto relative z-10">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-300 to-yellow-300 bg-clip-text text-transparent">
-              Featured Temples
-            </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-16 max-w-2xl">
-              Explore some of the most revered and beautiful temples across
-              India.
-            </p>
+        <section className="relative py-16 px-6 bg-gray-50">
+          <div className="container mx-auto">
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+                Featured Temples
+              </h2>
+              <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
+                View All <FaChevronRight className="ml-1" />
+              </a>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10 justify-items-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {templesData.map((t) => (
-                <TempleCard key={t.id} temple={t} />
-              ))}
-            </div>
-
-          </div>
-        </section>
-
-        {/* Our Services Section - Updated to a static grid layout */}
-        <section className="relative py-24 px-6">
-          <div className="container mx-auto relative z-10">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-300 to-yellow-300 bg-clip-text text-transparent">
-              Our Divine Services
-            </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-16 max-w-2xl">
-              Vama brings authentic spiritual experiences directly to your home
-              with trust, devotion, and modern convenience.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-              {servicesData.map((service, index) => (
-                <div
-                  key={index}
-                  className="relative bg-white p-10 rounded-2xl shadow-lg transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl overflow-hidden group"
-                >
-                  {/* Softer glowing aura */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-lg"></div>
-
-                  <div className="relative z-10 flex flex-col items-center text-center">
-                    {/* Icon inside softer saffron circle */}
-                    <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-orange-50 to-yellow-50 text-orange-600 text-4xl mb-6 shadow-lg group-hover:scale-110 transform transition-transform duration-500">
-                      {service.icon}
+                <div key={t.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                  <img src={t.image} alt={t.name} className="w-full h-48 object-cover" />
+                  <div className="p-5">
+                    <h3 className="font-bold text-xl mb-2">{t.name}</h3>
+                    <p className="text-gray-600 text-sm mb-3">{t.address}</p>
+                    <p className="text-gray-700 mb-4 line-clamp-2">{t.description}</p>
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="flex items-center">
+                        <FaStar className="text-yellow-400 fill-current" />
+                        <span className="ml-1 font-semibold">{t.rating}</span>
+                      </div>
+                      <span className="text-sm text-orange-600 font-semibold">{t.poojaType}</span>
                     </div>
-                    <h3 className="font-bold text-xl mb-3 text-orange-700 group-hover:text-orange-900 transition-colors duration-500">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm group-hover:text-orange-700/90 transition-colors duration-500">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-          </div>
-          {/* Decorative top accent, now even softer */}
-          <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-orange-50 to-transparent pointer-events-none"></div>
-        </section>
-
-        {/* Why Choose Us Section */}
-        <section className="bg-gradient-to-br from-orange-50 to-yellow-50 py-20 px-4 sm:px-6 lg:px-8">
-          {/* A style block to define the custom animation for the moving gradient */}
-          <style jsx>{`
-            @keyframes move-gradient {
-              0% {
-                background-position: 0% 50%;
-              }
-              100% {
-                background-position: 100% 50%;
-              }
-            }
-          `}</style>
-
-          <div className="container mx-auto">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-300 to-yellow-300 bg-clip-text text-transparent">
-              Why Choose Do-Rituals?
-            </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-16 max-w-2xl">
-              We connect you with authentic spiritual experiences through a
-              modern and reliable platform, built on trust and devotion.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="relative bg-white p-8 shadow-md rounded-lg transition-all duration-400 ease-in-out transform hover:-translate-y-2 hover:shadow-xl group"
-                  // Unique clipped path for the card dimension
-                  style={{
-                    clipPath: "polygon(0 10%, 100% 0, 100% 90%, 0% 100%)",
-                  }}
-                >
-                  {/* Main "Ethereal Glow" background for a soft, internal aura */}
-                  <div
-                    className="absolute inset-0 rounded-lg transition-all duration-500 ease-out transform scale-0 opacity-0 group-hover:scale-105 group-hover:opacity-100 pointer-events-none"
-                    style={{
-                      clipPath: "polygon(0 10%, 100% 0, 100% 90%, 0% 100%)",
-                      background:
-                        "radial-gradient(circle at center, #FFF4E0 0%, rgba(255, 255, 255, 0) 70%)",
-                    }}
-                  ></div>
-
-                  {/* The Wrapper for the Infinite Gradient Border Effect */}
-                  <div className="absolute inset-0 rounded-lg pointer-events-none z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                    {/* The div with the infinite, moving gradient */}
-                    <div
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        clipPath: "polygon(0 10%, 100% 0, 100% 90%, 0% 100%)",
-                        // Using repeating-linear-gradient for seamless movement
-                        background:
-                          "repeating-linear-gradient(to right, #FFD700 0%, #FF4500 20%, #FFD700 40%)",
-                        backgroundSize: "200% 100%", // Larger background to allow for movement
-                        animation: "move-gradient 6s linear infinite", // Apply the custom keyframe animation
-                        filter: "blur(4px)", // Soften the gradient border
-                      }}
-                    ></div>
-                    {/* The masking div to create the border effect */}
-                    <div
-                      className="absolute inset-[2px] bg-white rounded-lg"
-                      style={{
-                        clipPath: "polygon(0 10%, 100% 0, 100% 90%, 0% 100%)",
-                      }}
-                    ></div>
-                  </div>
-
-                  {/* Content layer positioned above all background effects */}
-                  <div className="relative z-10 flex flex-col items-center text-center">
-                    <div className="text-4xl mb-4 text-orange-400 group-hover:text-red-500 transition-colors duration-400 ease-in-out">
-                      {feature.icon}
-                    </div>
-                    <h3 className="font-semibold text-2xl mb-2 text-gray-800 group-hover:text-red-700 transition-colors duration-400 ease-in-out">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600 group-hover:text-red-600 transition-colors duration-400 ease-in-out">
-                      {feature.description}
-                    </p>
+                    <button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
+                      View Services
+                    </button>
                   </div>
                 </div>
               ))}
@@ -395,104 +236,139 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Donate Section (New) */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8">
+        {/* Our Services Section */}
+        <section className="relative py-16 px-6 bg-white">
           <div className="container mx-auto">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-6 bg-gradient-to-r from-orange-300 to-yellow-300 bg-clip-text text-transparent">
-              Support Our Mission
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-4 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+              How It Works
             </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-16 max-w-2xl">
-              Your support helps us preserve spiritual heritage, empower
-              communities, and spread divine knowledge globally.
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              Booking divine services has never been easier. Follow these simple steps to fulfill your spiritual needs.
             </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {donationData.map((item, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-8 rounded-xl shadow-lg border border-yellow-200 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl"
-                >
-                  <div className="flex justify-center mb-4">{item.icon}</div>
-                  <h3 className="text-2xl font-bold text-orange-700 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </div>
-              ))}
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="bg-orange-50 p-6 rounded-xl text-center">
+                <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">1</div>
+                <h3 className="font-bold text-xl mb-3">Browse & Select</h3>
+                <p className="text-gray-600">Explore our catalog of pujas and services from verified temples.</p>
+              </div>
+              
+              <div className="bg-orange-50 p-6 rounded-xl text-center">
+                <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">2</div>
+                <h3 className="font-bold text-xl mb-3">Book & Pay</h3>
+                <p className="text-gray-600">Select your preferred date and make a secure payment online.</p>
+              </div>
+              
+              <div className="bg-orange-50 p-6 rounded-xl text-center">
+                <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">3</div>
+                <h3 className="font-bold text-xl mb-3">Receive Confirmation</h3>
+                <p className="text-gray-600">Get booking confirmation, live updates, and prasad delivery.</p>
+              </div>
             </div>
 
-            <div className="flex items-center justify-center">
-              <Button
-                href="/donate"
-                className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform hover:scale-105 transition-all"
-              >
-                Donate Now
+            <div className="text-center">
+              <Button href="/services" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg">
+                Explore All Services
               </Button>
             </div>
           </div>
         </section>
 
-        {/* Testimonials Section (Updated: NOW WITH CAROUSEL) */}
-        <section className="bg-amber-50 py-20">
-          <div className="container mx-auto px-6 max-w-7xl">
-            <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-orange-500 to-yellow-600 bg-clip-text text-transparent">
-              What Our Devotees Say
+        {/* Why Choose Us Section */}
+        <section className="py-16 px-6 bg-gradient-to-br from-orange-50 to-yellow-50">
+          <div className="container mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-4 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+              Why Choose Us
             </h2>
-            <p className="text-base sm:text-lg text-gray-700 mb-16 max-w-2xl">
-              Hear from our community about their experience with Vama.
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              We combine traditional spiritual values with modern convenience for a seamless experience.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {features.map((feature, index) => (
+                <div key={index} className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                  <div className="text-orange-500 mb-4">{feature.icon}</div>
+                  <h3 className="font-bold text-xl mb-2">{feature.title}</h3>
+                  <p className="text-gray-600">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonials Section */}
+        <section className="py-16 px-6 bg-white">
+          <div className="container mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-4 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+              Customer Experiences
+            </h2>
+            <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+              See what our customers have to say about their experience with our services.
             </p>
 
             <div className="relative">
-              {/* Carousel Wrapper */}
               <div className="overflow-hidden">
                 <div
                   className="flex transition-transform duration-500 ease-in-out"
-                  style={{
-                    transform: `translateX(-${currentSlide * 100}%)`,
-                  }}
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                   {testimonials.map((testimonial, index) => (
-                    <div
-                      key={index}
-                      className="flex-shrink-0 w-full md:w-1/2 px-4"
-                    >
-                      <div className="group bg-white p-8 rounded-xl shadow-lg border border-gray-200 h-full flex flex-col items-center text-center relative overflow-hidden
-                  transition-transform duration-300 hover:scale-105 hover:shadow-2xl hover:border-yellow-400 hover:border-2">
-                        {/* Background SVG Icon */}
-                        <div className="absolute top-4 left-4 text-gray-100 opacity-70 group-hover:opacity-90 group-hover:scale-110 transition-all duration-300">
-                          <FaQuoteLeft className="w-12 h-12" />
+                    <div key={index} className="flex-shrink-0 w-full md:w-1/2 px-4">
+                      <div className="bg-white p-6 rounded-xl shadow-md border border-gray-100 h-full">
+                        <div className="flex items-center mb-4">
+                          <img
+                            src={testimonial.avatar}
+                            alt={testimonial.name}
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div className="ml-4">
+                            <p className="font-semibold">{testimonial.name}</p>
+                            <div className="flex text-yellow-400">
+                              {[...Array(5)].map((_, i) => (
+                                <FaStar key={i} className="fill-current" />
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="w-20 h-20 rounded-full object-cover border-4 border-yellow-400 mb-6 mt-8 group-hover:border-orange-400 transition-all duration-300"
-                        />
-                        <p className="font-semibold text-orange-500 mb-2">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-gray-600 italic leading-relaxed">
-                          "{testimonial.quote}"
-                        </p>
+                        <p className="text-gray-600 italic">"{testimonial.quote}"</p>
                       </div>
                     </div>
-
                   ))}
                 </div>
               </div>
 
-              {/* Navigation Buttons */}
               <button
                 onClick={goToPrevSlide}
-                className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none z-20 transition-all duration-300 ease-in-out hover:scale-110"
+                className="absolute top-1/2 -left-4 transform -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none z-20"
               >
-                <FaChevronLeft className="w-5 h-5" />
+                <FaChevronLeft />
               </button>
               <button
                 onClick={goToNextSlide}
-                className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none z-20 transition-all duration-300 ease-in-out hover:scale-110"
+                className="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white text-gray-800 p-3 rounded-full shadow-lg hover:bg-gray-100 focus:outline-none z-20"
               >
-                <FaChevronRight className="w-5 h-5" />
+                <FaChevronRight />
               </button>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-16 px-6 bg-orange-600">
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
+              Ready to Book Your Puja?
+            </h2>
+            <p className="text-orange-100 mb-8 max-w-2xl mx-auto">
+              Join thousands of devotees who have experienced divine services through our platform.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button href="/services" className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-4 rounded-lg font-bold text-lg">
+                Browse Services
+              </Button>
+              <Button href="/contact" className="bg-transparent hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg border border-white">
+                Contact Us
+              </Button>
             </div>
           </div>
         </section>

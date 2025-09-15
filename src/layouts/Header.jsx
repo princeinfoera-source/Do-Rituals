@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../assets/imgs/doRituals.webp";
-import templeData from "../store/templeSampleData";
+import { templeData } from "../store/templeSampleData";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import LotteUserProfile from "../assets/lotte/User.json";
