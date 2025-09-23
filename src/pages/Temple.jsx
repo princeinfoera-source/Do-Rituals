@@ -1,191 +1,240 @@
 import { useLocation, useParams } from "react-router-dom";
-import { FaClock, FaPhone, FaUserTie } from "react-icons/fa";
+import { FaClock, FaPhone, FaUserTie, FaMapMarkerAlt, FaUtensils } from "react-icons/fa";
 import { templeData } from "../store/templeSampleData";
-import "./style.css";
+import modak from "../assets/imgs/temp/modak.jpeg"
+import MotichoorLaddoo from "../assets/imgs/temp/Motichoor Laddoo.jpeg"
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();
+
+const prasadItems = [
+  {
+    id: 1,
+    name: "Modak",
+    img: modak,
+    description: "Sweet dumplings believed to be Lord Ganesha’s favorite delicacy.",
+  },
+  {
+    id: 2,
+    name: "Motichoor Laddoo",
+    img: MotichoorLaddoo,
+    description: "Saffron-infused boondi balls, popular festive prasad.",
+  },
+  {
+    id: 3,
+    name: "Puran Poli",
+    img: MotichoorLaddoo,
+    description: "Sweet flatbread stuffed with jaggery and chana dal, a festive staple.",
+  },
+  {
+    id: 4,
+    name: "Makhan Mishri",
+    img: modak,
+    description: "A classic prasad with butter and sugar crystals.",
+  },
+];
 
 const TemplePage = () => {
   const location = useLocation();
   const { templeName } = useParams();
 
   const temple =
-    location.state?.temple ||
-    templeData.find((t) => createSlug(t.name) === templeName);
+    location.state?.temple || templeData.find((t) => createSlug(t.name) === templeName);
 
   if (!temple) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-amber-50 text-gray-800 text-center p-6">
-        <h1 className="text-4xl font-extrabold text-red-600 mb-4">
-          404 - Temple Not Found
-        </h1>
-        <p className="text-lg text-gray-600">
-          The temple you are looking for does not exist or the link is invalid.
-        </p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-50 to-yellow-50 text-gray-800 text-center p-6">
+        <div className="max-w-md">
+          <h1 className="text-6xl font-extrabold text-red-600 mb-6 drop-shadow-lg">404</h1>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Temple Not Found</h2>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            The temple you are looking for does not exist or the link is invalid.
+          </p>
+          <a
+            href="/"
+            className="mt-6 inline-block bg-yellow-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-yellow-700 transition-colors duration-300 shadow-lg"
+          >
+            Back to Home
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-amber-50 text-gray-800 pt-20">
-      <div className="container mx-auto p-6">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-800">
+// {/* Hero Section */}
+<section
+  className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex flex-col lg:flex-row items-center lg:items-stretch"
+  style={{ backgroundImage: `url(${temple.img_src})` }}
+  role="banner"
+  aria-label={`Hero section for ${temple.name}`}
+>
+  {/* Full overlay for better contrast and readability */}
+  <div className="absolute inset-0 bg-black/60 lg:bg-black/50" aria-hidden="true" />
 
-        {/* Hero Section */}
-        <div
-          className="relative overflow-hidden rounded-3xl shadow-2xl mb-12 h-[400px] md:h-[600px] flex items-end"
-          style={{
-            backgroundImage: `url(${temple.img_src})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+  {/* Left Temple Info */}
+  <div className="relative z-10 flex-1 flex flex-col justify-center p-6 sm:p-8 lg:p-12 text-white max-w-md lg:max-w-none">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-8 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent leading-tight">
+      {temple.name}
+    </h1>
+    {/* Curved underline effect using pseudo-element (requires Tailwind config or custom CSS) */}
+    <div className="relative mb-6 sm:mb-8 after:absolute after:-bottom-2 after:left-0 after:w-24 after:h-1 after:bg-gradient-to-r after:from-orange-500 after:to-yellow-500 after:rounded-full after:shadow-lg">
+      {/* Spacer div for underline positioning */}
+    </div>
+    <address className="text-amber-100 text-base sm:text-lg lg:text-xl mb-4 not-italic">
+      {temple.address}
+    </address>
+    <div className="flex items-center gap-2 sm:gap-3 text-amber-200 text-sm sm:text-base">
+      <FaMapMarkerAlt className="text-orange-400" aria-hidden="true" />
+      <span>{temple.location || "Sacred Grounds"}</span>
+    </div>
+  </div>
+
+{/* Right Prasad Section (enhanced glassmorphism with blur toggle on hover) */}
+<div className="relative z-10 flex-1 p-6 sm:p-8 lg:p-12 flex flex-col justify-center text-center max-w-md lg:max-w-none lg:text-left">
+  <div className="bg-white/10 backdrop-blur-lg border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10">
+    {/* Grid of Prasad - responsive and accessible */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
+      {prasadItems.map(({ id, name, img, description }, index) => (
+        <article
+          key={id}
+          className="group cursor-pointer relative bg-white/30 backdrop-blur-sm group-hover:backdrop-blur-none border border-white/40 rounded-2xl shadow-xl overflow-hidden hover:scale-105 hover:shadow-2xl hover:border-orange-400/50 transition-all duration-500 ease-out bg-gradient-to-br from-white/20 to-transparent"
+          role="article"
+          aria-label={`${name} prasad`}
+          style={{ 
+            animationDelay: `${index * 100}ms` // Staggered entrance animation
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-80"></div>
-          <div className="relative p-8 md:p-12 text-white z-10">
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-2">
-              {temple.name}
-            </h1>
-            <p className="text-lg md:text-xl font-light text-amber-200">
-              {temple.address}
-            </p>
+          {/* Image with gradient overlay for depth */}
+          <div className="relative">
+            <img
+              src={img}
+              alt={`${name} - ${description.substring(0, 50)}...`}
+              className="w-full h-24 sm:h-32 lg:h-40 object-cover group-hover:brightness-110 group-hover:scale-110 transition-all duration-700 ease-out"
+              loading="lazy"
+            />
+            {/* Subtle gradient overlay on image */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Decorative badge on image corner */}
+            <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-0 group-hover:scale-100">
+              Sacred
+            </div>
           </div>
-        </div>
+          
+          {/* Content with enhanced styling */}
+          <div className="p-3 sm:p-4 relative">
+            {/* Name with accent line */}
+            <h3 className="text-gray-900/95 font-semibold text-sm sm:text-base mb-2 line-clamp-1 group-hover:text-orange-600 transition-colors duration-300 drop-shadow-md relative">
+              {name}
+              <div className="absolute -bottom-1 left-0 w-6 h-0.5 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </h3>
+            
+            {/* Description */}
+            <p className="text-gray-800/90 text-xs sm:text-sm line-clamp-3 leading-relaxed mb-3 opacity-100 drop-shadow-md">
+              {description}
+            </p>
+            
+            {/* Call-to-action button for engagement */}
+            <button className="w-full cursor-pointer bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold py-1.5 px-3 rounded-lg text-xs sm:text-sm shadow-lg opacity-100 group-hover:opacity-100 transform translate-y-0 group-hover:translate-y-0 transition-all duration-300 hover:from-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-transparent">
+              Oder Prasad
+            </button>
+          </div>
+          
+          {/* Subtle glow effect on hover (using pseudo-element) */}
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/15 to-yellow-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10" />
+        </article>
+      ))}
+    </div>
+  </div>
+</div>
 
-        <div className="md:col-span-3 bg-white p-10 rounded-3xl shadow-2xl border border-amber-100 flex flex-col md:flex-row gap-12">
-          {/* Left side: Text content */}
-          <div className="flex-1 flex flex-col justify-center space-y-6">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-yellow-700 mb-2 border-b-4 border-yellow-500 pb-3 tracking-wide">
+
+</section>
+
+
+
+
+      {/* About Section - Full Width */}
+      <section className="w-full py-16 px-6 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
+          <div className="flex-1 space-y-6">
+            <h2 className="text-4xl lg:text-5xl font-extrabold text-yellow-800 border-b-4 border-yellow-500 pb-3 inline-block">
               About the Temple
             </h2>
-            <p className="text-gray-800 leading-relaxed text-lg md:text-xl max-w-prose">
-              {temple.description}
-            </p>
-            <blockquote className="mt-6 text-yellow-600 text-lg md:text-xl font-semibold italic border-l-4 border-yellow-400 pl-6 max-w-prose shadow-sm bg-amber-50 p-4 rounded-lg">
+            <p className="text-lg text-gray-800 leading-relaxed">{temple.description}</p>
+            <blockquote className="text-yellow-700 text-lg font-semibold italic border-l-4 border-yellow-500 pl-6 bg-amber-50/70 p-4 rounded-xl shadow-inner">
               “May this sacred place bring peace and enlightenment to all who visit.”
             </blockquote>
           </div>
-
-          {/* Right side: Decorative imagery */}
-          <div className="flex-1 flex items-center justify-center">
-            <div className="relative w-full max-w-md">
-              <img
-                src={temple.images[0]}
-                alt="Temple Symbol"
-                className="w-full h-auto rounded-2xl shadow-2xl object-cover transform transition-transform duration-500 hover:scale-105"
-              />
-              {/* Optional decorative overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-2xl pointer-events-none"></div>
-            </div>
+          <div className="flex-1">
+            <img
+              src={temple.images[0]}
+              alt={temple.name}
+              className="rounded-2xl shadow-2xl w-full h-80 object-cover"
+            />
           </div>
         </div>
+      </section>
 
-
-        {/* Temple Gallery Section */}
-        {temple.images && temple.images.length > 0 && (
-          <div className="container mx-auto px-4 py-16">
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-yellow-800 mb-12 animate-fade-in-up">
-              <span className="relative inline-block">
-                Temple Gallery
-                <span className="absolute bottom-[-10px] left-1/2 w-24 h-1 bg-yellow-600 transform -translate-x-1/2 rounded-full"></span>
-              </span>
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {temple.images.map((image, index) => (
-                <div
-                  key={index}
-                  className="relative overflow-hidden rounded-3xl shadow-2xl transition-transform duration-300 hover:scale-105 group"
-                >
-                  <img
-                    src={image}
-                    alt={`Temple image ${index + 1}`}
-                    className="w-full h-64 object-cover transform transition-transform duration-500 group-hover:brightness-90"
-                  />
-                  {/* Overlay with a more refined look on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-yellow-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <h3 className="text-white text-lg font-semibold mb-1">
-                      Divine View {index + 1}
-                    </h3>
-                    <p className="text-gray-200 text-sm">
-                      A stunning capture of the temple.
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Gallery Section - Full */}
+      {temple.images && temple.images.length > 0 && (
+        <section className="w-full py-20 bg-gradient-to-br from-yellow-100 to-amber-200">
+          <h2 className="text-4xl font-extrabold text-yellow-900 text-center mb-12">
+            Temple Gallery
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-6">
+            {temple.images.map((image, index) => (
+              <div
+                key={index}
+                className="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform"
+              >
+                <img src={image} alt={index} className="w-full h-56 object-cover" />
+              </div>
+            ))}
           </div>
-        )}
+        </section>
+      )}
 
-
-        {/* Services Section */}
-        {temple.services && temple.services.length > 0 && (
-          <section className="bg-white p-10 rounded-3xl shadow-2xl border border-amber-100 mb-12">
-            <h2 className="text-4xl font-extrabold text-yellow-700 mb-10 tracking-wide">
+      {/* Services Section */}
+      {temple.services && temple.services.length > 0 && (
+        <section className="w-full py-20 px-6 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl font-extrabold text-yellow-800 mb-12 text-center">
               Services Available
-              <span className="block w-20 h-1 bg-yellow-500 rounded-full mt-3"></span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {temple.services.map((service, index) => (
                 <div
                   key={index}
-                  className="relative p-1 rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+                  className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl shadow-lg p-6 hover:scale-105 transition"
                 >
-                  {/* Animated Gradient Border */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 animate-gradient-move blur-lg opacity-50"></div>
-
-                  {/* Card Content */}
-                  <div className="relative bg-amber-50 p-6 rounded-xl flex flex-col justify-between border border-amber-100 shadow-md">
-                    <div className="flex-1">
-                      <h3 className="text-gray-800 text-xl font-semibold mb-3">
-                        {service.name}
-                      </h3>
-                      <p className="text-yellow-700 font-extrabold text-2xl mb-1">
-                        ₹{service.price}
-                      </p>
-                      <p className="text-gray-600 text-sm uppercase tracking-widest mb-4">
-                        per ritual
-                      </p>
-                      <p className="text-gray-600 italic text-sm">
-                        An auspicious spiritual ritual to bring blessings and peace.
-                      </p>
-                    </div>
-                    <button className="mt-6 bg-yellow-600 text-white px-6 py-3 rounded-lg shadow hover:bg-yellow-700 transition">
-                      Book Now
-                    </button>
-                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{service.name}</h3>
+                  <p className="text-yellow-700 font-bold text-2xl mb-2">₹{service.price}</p>
+                  <p className="text-gray-700 text-sm mb-4">
+                    {service.description || "A divine ritual to bring blessings."}
+                  </p>
+                  <button className="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white px-4 py-3 rounded-xl shadow-lg font-semibold hover:from-yellow-700 hover:to-orange-700 transition">
+                    Book Now
+                  </button>
                 </div>
               ))}
             </div>
-          </section>
-        )}
-
-
-
-
-        {/* Map Section */}
-        {temple.map_src && (
-          <div>
-            <h2 className="text-3xl font-bold text-yellow-700 mb-6 text-center">
-              Find Us on the Map
-            </h2>
-            <div
-              className="relative overflow-hidden rounded-2xl shadow-xl border-4 border-amber-100"
-              style={{ height: "450px" }}
-            >
-              <iframe
-                title="Temple Location Map"
-                src={temple.map_src}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
           </div>
-        )}
+        </section>
+      )}
 
-
-      </div>
+      {/* Map Section Full Width */}
+      {temple.map_src && (
+        <section className="w-full h-[450px]">
+          <iframe
+            title={`${temple.name} Map`}
+            src={temple.map_src}
+            className="w-full h-full border-0"
+            allowFullScreen
+            loading="lazy"
+          ></iframe>
+        </section>
+      )}
     </div>
   );
 };

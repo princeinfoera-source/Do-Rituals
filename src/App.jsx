@@ -50,10 +50,9 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="temples/:templeName" element={<TemplePage />} />
-          </Route>
-
+          <Route index element={<HomePage />} />
+          <Route path="temples/:templeName" element={<TemplePage />} />
+        </Route>
           {/* Dashboard login */}
           <Route path="dashboard" element={<DashboardLogin />} />
 
