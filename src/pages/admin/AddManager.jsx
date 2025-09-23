@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from "../../components/dashboard/admin/Button";
 import { Input } from "../../components/dashboard/admin/Input";
-import { Label } from "../../components/dashboard/admin/label";
+import { Label } from "../../components/dashboard/admin/Label";
 import {
   Card,
   CardContent,
