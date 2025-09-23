@@ -11,9 +11,6 @@ import {
   CardTitle,
 } from "../../components/dashboard/admin/Card";
 import { User, Shield, Mail, Phone, MapPin } from "lucide-react";
-import Input from "@/components/dashboard/admin/Input.jsx";
-
-
 
 const AddManager = () => {
   const [formData, setFormData] = useState({

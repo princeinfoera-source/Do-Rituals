@@ -1,1 +1,53 @@
 @import "tailwindcss";
+
+/* Hide Google Translate Bar */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+/* Remove Google Branding */
+.goog-logo-link,
+.goog-te-gadget-icon {
+  display: none !important;
+}
+
+/* Translate Widget Position */
+.translate-widget {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+}
+
+/* Currency Box */
+.currency-box {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: white;
+  padding: 10px 15px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  z-index: 1000;
+  border-radius: 6px;
+}
+
+@keyframes fadeInSearch {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInSearch {
+  animation: fadeInSearch 1s ease-in-out 3.5s forwards; /* starts after headings fade */
+}

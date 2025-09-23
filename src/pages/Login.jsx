@@ -22,7 +22,6 @@ const Login = () => {
 
   const onGoogleSuccess = (credentialResponse) => {
     console.log("Google Login Success: ", credentialResponse);
-    // Handle credentialResponse here (send to backend or authenticate client side)
   };
 
   const onGoogleError = () => {

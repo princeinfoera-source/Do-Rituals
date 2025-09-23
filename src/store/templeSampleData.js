@@ -481,7 +481,7 @@ export const templesData = [
     address: "Madurai, Tamil Nadu",
     image: meenakshiTemple,
     link: "/temples/2",
-    rating: 4.8,
+    rating: 4.5,
     description:
       "A historic Hindu temple located on the southern bank of the Vaigai River in the temple city of Madurai.",
   },

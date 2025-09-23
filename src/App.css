@@ -1,0 +1,62 @@
+/* @keyframes fadeOutWave {                              ------>  To remove the content with wavy effect
+  0% {
+    opacity: 1;
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-5px) rotate(-2deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) rotate(5deg);
+  }
+} */
+
+/* Fade In Down Animation for Heading */
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In Up Animation for Paragraph */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply Animations */
+.animate-fadeInDown {
+  animation: fadeInDown 1s ease-out forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s; /* Optional delay for stagger effect */
+}
+.wavy span {
+  display: inline-block;
+  animation: wave 1.2s ease-in-out infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+@keyframes wave {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
