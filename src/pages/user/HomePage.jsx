@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import HomePageImg from "../../assets/imgs/HomePageImg.png";
 import DownloadAppSection from "../../components/DownloadAppSection.jsx";
 import TempleCard from "../../components/TempleCard.jsx";
@@ -8,11 +8,17 @@ import "../style.css";
 import ScrollingBanner from "./ScrollingBanner.jsx";
 import { fetchCurrencyConversionInfo } from "../../utils/detectCurrency.js";
 import DecimalStarRating from "../../utils/starRating.jsx";
-import MahaRudrabhishek from "../../assets/imgs/temp/Maha Rudrabhishek.jpeg";
-import SundarkandPath from "../../assets/imgs/temp/Sundarkand Path.jpeg"
-import GrahShantiPuja from "../../assets/imgs/temp/Grah Shanti Puja.jpeg";
-import SatyanarayanKatha from "../../assets/imgs/temp/Satyanarayan Katha.jpeg";
+// import MahaRudrabhishek from "../../assets/imgs/temp/Maha Rudrabhishek.jpeg";
+// import SundarkandPath from "../../assets/imgs/temp/Sundarkand Path.jpeg"
+// import GrahShantiPuja from "../../assets/imgs/temp/Grah Shanti Puja.jpeg";
+// import SatyanarayanKatha from "../../assets/imgs/temp/Satyanarayan Katha.jpeg";
+import {prasadItems} from "../../store/prasaad.js";
+import {popularServices} from "../../store/templeSampleData.js"
 
+
+const CARD_WIDTH = 260; // px
+const VISIBLE_CARDS = 5; // Number of cards visible at a time
+const GAP = 24; // gap between cards
 
 import {
   FaStar,
@@ -66,40 +72,40 @@ const features = [
   },
 ];
 
-const popularServices = [
-  {
-    name: "Maha Rudrabhishek",
-    price: 1251,
-    originalPrice: "₹1,500",
-    rating: 4.9,
-    bookings: "1.2k+",
-    image: MahaRudrabhishek,
-  },
-  {
-    name: "Sundarkand Path",
-    price: 751,
-    originalPrice: "₹900",
-    rating: 4.8,
-    bookings: "980+",
-    image: SundarkandPath,
-  },
-  {
-    name: "Grah Shanti Puja",
-    price: 2100,
-    originalPrice: "₹2,500",
-    rating: 4.7,
-    bookings: "850+",
-    image: GrahShantiPuja,
-  },
-  {
-    name: "Satyanarayan Katha",
-    price: 1100,
-    originalPrice: "₹1,350",
-    rating: 4.9,
-    bookings: "1.5k+",
-    image: SatyanarayanKatha,
-  },
-];
+// const popularServices = [
+//   {
+//     name: "Maha Rudrabhishek",
+//     price: 1251,
+//     originalPrice: "₹1,500",
+//     rating: 4.9,
+//     bookings: "1.2k+",
+//     image: MahaRudrabhishek,
+//   },
+//   {
+//     name: "Sundarkand Path",
+//     price: 751,
+//     originalPrice: "900",
+//     rating: 4.8,
+//     bookings: "980+",
+//     image: SundarkandPath,
+//   },
+//   {
+//     name: "Grah Shanti Puja",
+//     price: 2100,
+//     originalPrice: "₹2,500",
+//     rating: 4.7,
+//     bookings: "850+",
+//     image: GrahShantiPuja,
+//   },
+//   {
+//     name: "Satyanarayan Katha",
+//     price: 1100,
+//     originalPrice: "₹1,350",
+//     rating: 4.9,
+//     bookings: "1.5k+",
+//     image: SatyanarayanKatha,
+//   },
+// ];
 
 const offersData = [
   "🪷 Free Prasad Delivery on orders above ₹999 🪷",
@@ -121,10 +127,36 @@ const HomePage = () => {
     fetchCurrencyConversionInfo().then(setCurrencyInfo);
   }, []);
 
+  const [startIndex, setStartIndex] = useState(0);
+
+  const maxStart = Math.max(prasadItems.length - VISIBLE_CARDS, 0);
+
+  const carouselRef = useRef(null);
+
+  const handleNext = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: CARD_WIDTH + GAP,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handlePrev = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -(CARD_WIDTH + GAP),
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const visibleItems = prasadItems.slice(startIndex, startIndex + VISIBLE_CARDS);
+
   const convertPrice = (priceINR) => {
     if (!currencyInfo) return "Loading...";
     const convertedPrice = priceINR * currencyInfo.conversionRate;
-    return `${currencyInfo.currencyCode} (${currencyInfo.symbol}) ${convertedPrice.toFixed(2)}`;
+    return `${currencyInfo.symbol}${convertedPrice.toFixed(2)}`;
   };
 
   const convertOriginalPrice = (originalPriceStr) => {
@@ -257,8 +289,77 @@ const HomePage = () => {
         </div>
       </section>
 
+      <section className="flex flex-col items-center h-auto">
+        <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
+          Sacred Prasad
+        </h2>
+
+        <div className="flex items-center justify-center w-full gap-2">
+          {/* Left arrow */}
+          <button
+            className="cursor-pointer p-2 rounded-full bg-white hover:bg-yellow-200 shadow disabled:opacity-40"
+            onClick={handlePrev}
+            aria-label="Previous"
+          >
+            <FaChevronLeft className="text-orange-500" />
+          </button>
+
+          {/* Carousel */}
+          <div
+            ref={carouselRef}
+            className="cursor-pointer flex gap-6 pt-5 overflow-x-auto overflow-y-clip scroll-smooth snap-x snap-mandatory px-4 hide-scrollbar w-full h-auto"
+          >
+            {prasadItems.map(({ id, name, img, description, price }) => (
+              <article
+                key={id}
+                className="group min-w-[240px] h-auto max-w-[280px] flex-shrink-0 snap-start bg-white/30 backdrop-blur-sm border border-white/40 rounded-2xl shadow-xl overflow-hidden hover:scale-105 hover:shadow-2xl hover:border-orange-400/50 transition-all duration-500 ease-out bg-gradient-to-br from-white/20 to-transparent relative"
+              >
+                <div className="relative">
+                  <img
+                    src={img}
+                    alt={name}
+                    className="w-full h-48 object-cover group-hover:brightness-110 group-hover:scale-110 transition-all duration-700 ease-out"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Sacred
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="flex justify-between items-center text-gray-900/95 font-semibold text-base mb-2 line-clamp-1 group-hover:text-orange-600 transition-colors duration-300">
+                    <span className="truncate">{name}</span>
+                    <span className="text-orange-600 font-bold ml-2 flex-shrink-0">{price}</span>
+                  </h3>
+
+                  <p className="text-gray-800/90 text-sm line-clamp-3 leading-relaxed mb-2">
+                    {description}
+                  </p>
+
+                  <button className="cursor-pointer w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold py-1.5 px-3 rounded-lg text-sm shadow-lg transition-all duration-300 hover:from-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2">
+                    Order Prasad
+                  </button>
+                </div>
+              </article>
+            ))}
+
+          </div>
+
+
+          {/* Right arrow */}
+          <button
+            className="cursor-pointer p-2 rounded-full bg-white hover:bg-yellow-200 shadow disabled:opacity-40"
+            onClick={handleNext}
+            aria-label="Next"
+          >
+            <FaChevronRight className="text-orange-500" />
+          </button>
+        </div>
+      </section>
+
+
       {/* Featured Temples Section */}
-      <section className="relative py-0 px-6 bg-gray-50">
+      <section className="mt-12 relative py-0 px-6 bg-gray-50">
         <div className="text-center container mx-auto">
           {/* Section title */}
           <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
@@ -267,7 +368,7 @@ const HomePage = () => {
 
 
           {/* Grid of temples */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {templesData.map((t) => (
               <div
                 key={t.id}

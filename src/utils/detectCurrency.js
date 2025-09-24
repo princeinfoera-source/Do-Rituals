@@ -50,6 +50,7 @@ const currencySymbols = {
   ISK: "kr",
 };
 
+
 export async function fetchCurrencyConversionInfo() {
   try {
     const geoRes = await fetch("https://ipapi.co/json/");

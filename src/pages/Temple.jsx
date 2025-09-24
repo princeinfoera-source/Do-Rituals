@@ -1,42 +1,22 @@
 import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { FaClock, FaPhone, FaUserTie, FaMapMarkerAlt, FaUtensils } from "react-icons/fa";
+import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
 import { templeData } from "../store/templeSampleData";
-import modak from "../assets/imgs/temp/modak.jpeg";
-import MotichoorLaddoo from "../assets/imgs/temp/Motichoor Laddoo.jpeg";
+import { prasadItems } from "../store/prasaad";
+import { popularServices } from "../store/templeSampleData";
+import DecimalStarRating from "../utils/starRating.jsx";
+import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();
-
-const prasadItems = [
-  {
-    id: 1,
-    name: "Modak",
-    img: modak,
-    description: "Sweet dumplings believed to be Lord Ganesha’s favorite delicacy."
-  },
-  {
-    id: 2,
-    name: "Motichoor Laddoo",
-    img: MotichoorLaddoo,
-    description: "Saffron-infused boondi balls, popular festive prasad."
-  },
-  {
-    id: 3,
-    name: "Puran Poli",
-    img: MotichoorLaddoo,
-    description: "Sweet flatbread stuffed with jaggery and chana dal, a festive staple."
-  },
-  {
-    id: 4,
-    name: "Makhan Mishri",
-    img: modak,
-    description: "A classic prasad with butter and sugar crystals."
-  }
-];
 
 const TemplePage = () => {
   const location = useLocation();
   const { templeName } = useParams();
+  const [currencyInfo, setCurrencyInfo] = useState(null);
+
+  useEffect(() => {
+    fetchCurrencyConversionInfo().then(setCurrencyInfo);
+  }, []);
 
   const temple =
     location.state?.temple || templeData.find((t) => createSlug(t.name) === templeName);
@@ -60,9 +40,14 @@ const TemplePage = () => {
       </div>
     );
   }
-  
-  const images = temple.images || [];
 
+  const convertPrice = (priceINR) => {
+    if (!currencyInfo) return "Loading...";
+    const convertedPrice = priceINR * currencyInfo.conversionRate;
+    return `${currencyInfo.symbol}${convertedPrice.toFixed(2)}`;
+  };
+
+  const images = temple.images || [];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -74,87 +59,129 @@ const TemplePage = () => {
   }, [images.length]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-800">
-      {/* Hero Section */}
-      <section
-        className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex flex-col lg:flex-row items-center lg:items-stretch"
-        style={{ backgroundImage: `url(${temple.img_src})` }}
-        role="banner"
-        aria-label={`Hero section for ${temple.name}`}
-      >
-        <div className="absolute inset-0 bg-black/60 lg:bg-black/50" aria-hidden="true" />
-        {/* Left Temple Info */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center p-6 sm:p-8 lg:p-12 text-white max-w-md lg:max-w-none">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 sm:mb-8 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent leading-tight">
-            {temple.name}
-          </h1>
-          <div className="relative mb-6 sm:mb-8 after:absolute after:-bottom-2 after:left-0 after:w-24 after:h-1 after:bg-gradient-to-r after:from-orange-500 after:to-yellow-500 after:rounded-full after:shadow-lg" />
-          <address className="text-amber-100 text-base sm:text-lg lg:text-xl mb-4 not-italic">
-            {temple.address}
-          </address>
-          <div className="flex items-center gap-2 sm:gap-3 text-amber-200 text-sm sm:text-base">
-            <FaMapMarkerAlt className="text-orange-400" aria-hidden="true" />
-            <span>{temple.location || "Sacred Grounds"}</span>
-          </div>
-        </div>
+    <div className="overflow-x-hidden min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-800">
 
-        {/* Right Prasad Section */}
-        <div className="relative z-10 flex-1 p-6 sm:p-8 lg:p-12 flex flex-col justify-center text-center max-w-md lg:max-w-none lg:text-left">
-          <div className="bg-white/10 backdrop-blur-lg border border-white/30 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5">
-              {prasadItems.map(({ id, name, img, description }, index) => (
-                <article
-                  key={id}
-                  className="group cursor-pointer relative bg-white/30 backdrop-blur-sm group-hover:backdrop-blur-none border border-white/40 rounded-2xl shadow-xl overflow-hidden hover:scale-105 hover:shadow-2xl hover:border-orange-400/50 transition-all duration-500 ease-out bg-gradient-to-br from-white/20 to-transparent"
-                  role="article"
-                  aria-label={`${name} prasad`}
-                  style={{
-                    animationDelay: `${index * 100}ms`
-                  }}
-                >
-                  <div className="relative">
-                    <img
-                      src={img}
-                      alt={`${name} - ${description.substring(0, 50)}...`}
-                      className="w-full h-24 sm:h-32 lg:h-40 object-cover group-hover:brightness-110 group-hover:scale-110 transition-all duration-700 ease-out"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-y-0 group-hover:scale-100">
-                      Sacred
-                    </div>
-                  </div>
-                  <div className="p-3 sm:p-4 relative">
-                    <h3 className="text-gray-900/95 font-semibold text-sm sm:text-base mb-2 line-clamp-1 group-hover:text-orange-600 transition-colors duration-300 drop-shadow-md relative">
-                      {name}
-                      <div className="absolute -bottom-1 left-0 w-6 h-0.5 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </h3>
-                    <p className="text-gray-800/90 text-xs sm:text-sm line-clamp-3 leading-relaxed mb-3 opacity-100 drop-shadow-md">
-                      {description}
-                    </p>
-                    <button className="w-full cursor-pointer bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold py-1.5 px-3 rounded-lg text-xs sm:text-sm shadow-lg opacity-100 group-hover:opacity-100 transform translate-y-0 group-hover:translate-y-0 transition-all duration-300 hover:from-orange-600 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-transparent">
-                      Order Prasad
-                    </button>
-                  </div>
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-500/15 to-yellow-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10" />
-                </article>
-              ))}
+
+{/* Hero Section */}
+<section
+  className="relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex flex-col lg:flex-row items-center lg:items-stretch"
+  style={{ backgroundImage: `url(${temple.img_src})` }}
+  role="banner"
+  aria-label={`Hero section for ${temple.name}`}
+>
+  <div className="absolute inset-0 bg-black/50 lg:bg-black/40" aria-hidden="true" />
+
+  {/* Left Temple Info */}
+  <div className="relative z-10 flex flex-col justify-center p-4 sm:p-6 lg:p-10 text-white w-full lg:w-[50vw] max-w-full">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent leading-tight">
+      {temple.name}
+    </h1>
+    <div className="relative mb-4 sm:mb-6 after:absolute after:-bottom-1 after:left-0 after:w-20 after:h-1 after:bg-gradient-to-r after:from-orange-500 after:to-yellow-500 after:rounded-full after:shadow-lg" />
+    <address className="text-amber-100 text-sm sm:text-base lg:text-lg mb-2 not-italic">
+      {temple.address}
+    </address>
+    <div className="flex items-center gap-2 sm:gap-3 text-amber-200 text-xs sm:text-sm">
+      <FaMapMarkerAlt className="text-orange-400" aria-hidden="true" />
+      <span>{temple.location || "Sacred Grounds"}</span>
+    </div>
+  </div>
+
+  {/* Right Prasad Section */}
+  <div className="relative z-10 flex justify-end p-4 sm:p-6 lg:p-10 lg:mt-0 w-full lg:w-[50vw]">
+    <div className="bg-white/20 backdrop-blur-sm border border-white/20 rounded-2xl shadow-lg p-3 sm:p-4 lg:p-6 w-full h-auto mt-12">
+      <div className="grid grid-cols-2 gap-3">
+        {prasadItems.slice(0, 6).map(({ id, name, img, description, price }) => (
+          <article
+            key={id}
+            className="group cursor-pointer relative bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl shadow-sm overflow-hidden hover:scale-105 transition-transform duration-300"
+            role="article"
+            aria-label={`${name} prasad`}
+          >
+            <div className="relative">
+              <img
+                src={img}
+                alt={`${name} - ${description.substring(0, 50)}...`}
+                className="w-full h-20 object-cover group-hover:brightness-110 group-hover:scale-105 transition-all duration-500"
+                loading="lazy"
+              />
+              <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-2 py-0.5 rounded-full text-xs font-semibold shadow">
+                Sacred
+              </div>
             </div>
+            <div className="p-2 sm:p-2.5">
+              <h3 className="text-gray-900 font-semibold text-sm flex justify-between items-center mb-1">
+                <span className="truncate">{name}</span>
+                <span className="text-orange-500 font-bold">{price}</span>
+              </h3>
+              <p className="text-gray-800 text-xs line-clamp-2 mb-2">
+                {description}
+              </p>
+              <button className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold text-xs py-1 rounded-lg shadow hover:from-orange-600 hover:to-yellow-600 transition">
+                Order Prasad
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+      {/* Popular Services Section */}
+      <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {popularServices.map((service, idx) => (
+              <div
+                key={idx}
+                className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.name}
+                    className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                  />
+                  <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                    Popular
+                  </div>
+                </div>
+                <div className="p-5 flex flex-col gap-2">
+                  <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl sm:text-2xl font-bold text-orange-600">{convertPrice(service.price)}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <DecimalStarRating rating={service.rating} size={20} />
+                    <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
+                  </div>
+                  <button className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
+                    <FaShoppingCart className="mr-2" /> Book Now
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-end mt-6">
+            <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
+              View All <FaChevronRight className="ml-1" />
+            </a>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="w-full py-16 px-6 bg-white">
+      <section className="w-full py-16 px-4 sm:px-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 items-center">
           <div className="flex-1 space-y-6">
             <h2 className="text-4xl lg:text-5xl font-extrabold text-yellow-800 border-b-4 border-yellow-500 pb-3 inline-block">
               About the Temple
             </h2>
             <p className="text-lg text-gray-800 leading-relaxed">{temple.description}</p>
-            <blockquote className="text-yellow-700 text-lg font-semibold italic border-l-4 border-yellow-500 pl-6 bg-amber-50/70 p-4 rounded-xl shadow-inner">
-              “May this sacred place bring peace and enlightenment to all who visit.”
-            </blockquote>
           </div>
           <div className="flex-1">
             <img
@@ -167,43 +194,39 @@ const TemplePage = () => {
       </section>
 
       {/* Gallery Section */}
-{images.length > 0 && (
-  <section className="w-full py-20 bg-gradient-to-br from-yellow-100 to-amber-200">
-    <h2 className="text-4xl font-extrabold text-yellow-900 text-center mb-12">
-      Temple Gallery
-    </h2>
-    <div className="max-w-7xl mx-auto px-6 flex flex-col gap-6">
-      {/* Large main image */}
-      <div className="rounded-2xl overflow-hidden shadow-lg">
-        <img
-          src={images[currentIndex]}
-          alt={`Temple image ${currentIndex + 1}`}
-          className="w-full h-[480px] object-cover rounded-2xl transition-all duration-700 ease-in-out"
-        />
-      </div>
-
-      {/* Horizontal thumbnails below */}
-      <div className="flex gap-4 overflow-x-auto max-w-full px-1">
-        {images.map((image, idx) => (
-          <img
-            key={idx}
-            src={image}
-            alt={`Temple thumbnail ${idx + 1}`}
-            className={`w-24 h-24 object-cover rounded-lg cursor-pointer flex-shrink-0 transition-transform duration-300 ${
-              idx === currentIndex ? "scale-105 shadow-lg border-4 border-yellow-400" : "opacity-70"
-            }`}
-            onClick={() => setCurrentIndex(idx)}
-          />
-        ))}
-      </div>
-    </div>
-  </section>
-)}
-
+      {images.length > 0 && (
+        <section className="w-full py-10 px-4 sm:px-6 bg-gradient-to-br from-yellow-100 to-amber-200">
+          <h2 className="text-4xl font-extrabold text-yellow-900 text-center mb-12">
+            Temple Gallery
+          </h2>
+          <div className="max-w-7xl mx-auto flex flex-col gap-6">
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src={images[currentIndex]}
+                alt={`Temple image ${currentIndex + 1}`}
+                className="w-full h-[480px] object-cover rounded-2xl transition-all duration-700 ease-in-out"
+              />
+            </div>
+            <div className="flex gap-4 overflow-x-auto">
+              {images.map((image, idx) => (
+                <img
+                  key={idx}
+                  src={image}
+                  alt={`Temple thumbnail ${idx + 1}`}
+                  className={`w-24 h-24 object-cover rounded-lg cursor-pointer flex-shrink-0 transition-transform duration-300 ${
+                    idx === currentIndex ? "scale-105 shadow-lg border-4 border-yellow-400" : "opacity-70"
+                  }`}
+                  onClick={() => setCurrentIndex(idx)}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Services Section */}
       {temple.services && temple.services.length > 0 && (
-        <section className="w-full py-20 px-6 bg-white">
+        <section className="w-full py-20 px-4 sm:px-6 bg-white">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl font-extrabold text-yellow-800 mb-12 text-center">
               Services Available

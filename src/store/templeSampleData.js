@@ -1,3 +1,5 @@
+import {prasadItems} from "../store/prasaad.js";
+
 import img from "../assets/imgs/temp/Baidyanath Dham.jpg";
 import img1 from "../assets/imgs/temp/pexels-iskcontvdhaka-12590117.jpg";
 import img2 from "../assets/imgs/temp/pexels-kabita-darlami-2613403-5756585.jpg";
@@ -21,6 +23,11 @@ import {
 import kashiTemnple from "../assets/imgs/temp/Kashi Vishwanath Temple.jpg";
 import meenakshiTemple from "../assets/imgs/temp/Meenakshi Amman Temple.jpg";
 import jagannathTemple from "../assets/imgs/temp/Jagannath Temple.jpg";
+import goldenTemple from "../assets/imgs/temp/goldenTemple.jpeg";
+import SundarkandPath from "../assets/imgs/temp/Sundarkand Path.jpeg"
+import GrahShantiPuja from "../assets/imgs/temp/Grah Shanti Puja.jpeg";
+import SatyanarayanKatha from "../assets/imgs/temp/Satyanarayan Katha.jpeg";
+import MahaRudrabhishek from "../assets/imgs/temp/Maha Rudrabhishek.jpeg";
 
 // Data for the temple dropdown menu
 export const templeData = [
@@ -496,6 +503,17 @@ export const templesData = [
     description:
       "An important Hindu temple dedicated to Jagannath, a form of Krishna. It is located in Puri, Odisha.",
   },
+  {
+    id: 4,
+    name: "Golden Temple",
+    poojaType: "Guru Granth Sahib Paath",
+    address: "Amritsar, Punjab",
+    image: goldenTemple,
+    link: "/temples/4",
+    rating: 4.8,
+    description:
+      "The holiest shrine in Sikhism, located in Amritsar, Punjab, known for its golden architecture and spiritual significance.",
+  },
 ];
 
 export const servicesData = [
@@ -573,5 +591,40 @@ export const donationData = [
     title: "Spiritual Education",
     description:
       "Contribute to initiatives that promote Vedic learning and spiritual knowledge across the globe.",
+  },
+];
+
+export const popularServices = [
+  {
+    name: "Maha Rudrabhishek",
+    price: 1251,
+    originalPrice: "₹1,500",
+    rating: 4.9,
+    bookings: "1.2k+",
+    image: MahaRudrabhishek,
+  },
+  {
+    name: "Sundarkand Path",
+    price: 751,
+    originalPrice: "900",
+    rating: 4.8,
+    bookings: "980+",
+    image: SundarkandPath,
+  },
+  {
+    name: "Grah Shanti Puja",
+    price: 2100,
+    originalPrice: "₹2,500",
+    rating: 4.7,
+    bookings: "850+",
+    image: GrahShantiPuja,
+  },
+  {
+    name: "Satyanarayan Katha",
+    price: 1100,
+    originalPrice: "₹1,350",
+    rating: 4.9,
+    bookings: "1.5k+",
+    image: SatyanarayanKatha,
   },
 ];

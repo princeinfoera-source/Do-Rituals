@@ -135,15 +135,15 @@ const Header = () => {
             )}
           </div>
 
-          <a href="/bhakti-dhara" className="relative group hover:text-orange-600 transition">Bhakti Dhara
-            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
-          </a>
-
           <a href="/puja" className="relative group hover:text-orange-600 transition">Puja
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
           </a>
 
           <a href="/chadhava" className="relative group hover:text-orange-600 transition">Chadhava
+            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+          </a>
+
+          <a href="/bhakti-dhara" className="relative group hover:text-orange-600 transition">Bhakti Dhara
             <span className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
           </a>
 
@@ -196,9 +196,9 @@ const Header = () => {
           <nav className="flex flex-col items-center space-y-4 font-medium text-gray-700">
             <a href="/" className="hover:text-orange-600 transition">Home</a>
             <a href="/temples" className="hover:text-orange-600 transition">Temples</a>
-            <a href="/bhakti-dhara" className="hover:text-orange-600 transition">Bhakti Dhara</a>
             <a href="/puja" className="hover:text-orange-600 transition">Puja</a>
             <a href="/chadhava" className="hover:text-orange-600 transition">Chadhava</a>
+            <a href="/bhakti-dhara" className="hover:text-orange-600 transition">Bhakti Dhara</a>
             <a href="/ritual-mall" className="hover:text-orange-600 transition">Ritual Mall</a>
             <a href="/astrology" className="hover:text-orange-600 transition">Astrology</a>
             <a href="/library" className="hover:text-orange-600 transition">Library</a>
