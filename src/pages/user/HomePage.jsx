@@ -1,24 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import HomePageImg from "../../assets/imgs/HomePageImg.png";
 import DownloadAppSection from "../../components/DownloadAppSection.jsx";
-import TempleCard from "../../components/TempleCard.jsx";
 import Button from "../../components/ExploreAnimatedButton.jsx";
-import { testimonials, templesData, servicesData, donationData } from "../../store/templeSampleData.js";
+import { testimonials, templeData } from "../../store/templeSampleData.js";
 import "../style.css";
 import ScrollingBanner from "./ScrollingBanner.jsx";
 import { fetchCurrencyConversionInfo } from "../../utils/detectCurrency.js";
 import DecimalStarRating from "../../utils/starRating.jsx";
-// import MahaRudrabhishek from "../../assets/imgs/temp/Maha Rudrabhishek.jpeg";
-// import SundarkandPath from "../../assets/imgs/temp/Sundarkand Path.jpeg"
-// import GrahShantiPuja from "../../assets/imgs/temp/Grah Shanti Puja.jpeg";
-// import SatyanarayanKatha from "../../assets/imgs/temp/Satyanarayan Katha.jpeg";
-import {prasadItems} from "../../store/prasaad.js";
-import {popularServices} from "../../store/templeSampleData.js"
+import { prasadItems } from "../../store/prasaad.js";
+import { popularPooja } from "../../store/templeSampleData.js"
 
 
-const CARD_WIDTH = 260; // px
-const VISIBLE_CARDS = 5; // Number of cards visible at a time
-const GAP = 24; // gap between cards
+const CARD_WIDTH = 260;
+const VISIBLE_CARDS = 5;
+const GAP = 24;
 
 import {
   FaStar,
@@ -72,41 +69,6 @@ const features = [
   },
 ];
 
-// const popularServices = [
-//   {
-//     name: "Maha Rudrabhishek",
-//     price: 1251,
-//     originalPrice: "₹1,500",
-//     rating: 4.9,
-//     bookings: "1.2k+",
-//     image: MahaRudrabhishek,
-//   },
-//   {
-//     name: "Sundarkand Path",
-//     price: 751,
-//     originalPrice: "900",
-//     rating: 4.8,
-//     bookings: "980+",
-//     image: SundarkandPath,
-//   },
-//   {
-//     name: "Grah Shanti Puja",
-//     price: 2100,
-//     originalPrice: "₹2,500",
-//     rating: 4.7,
-//     bookings: "850+",
-//     image: GrahShantiPuja,
-//   },
-//   {
-//     name: "Satyanarayan Katha",
-//     price: 1100,
-//     originalPrice: "₹1,350",
-//     rating: 4.9,
-//     bookings: "1.5k+",
-//     image: SatyanarayanKatha,
-//   },
-// ];
-
 const offersData = [
   "🪷 Free Prasad Delivery on orders above ₹999 🪷",
   "⭐ Get 10% off on your first booking ⭐",
@@ -120,6 +82,7 @@ const parsePriceStringToNumber = (priceStr) => {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currencyInfo, setCurrencyInfo] = useState(null);
 
@@ -172,74 +135,84 @@ const HomePage = () => {
     setCurrentSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Navigate to clicked temple detail
+  const handleTempleClick = (temple) => {
+    navigate(`/temples/${temple.name.replace(/\s+/g, "-").toLowerCase()}`, {
+      state: { temple: temple },
+    });
+  };
+
   return (
-    <>
+    <div className="w-full">
       {/* Hero Section */}
       <section
-        className="relative h-screen flex flex-col justify-center items-center text-white text-center px-6 bg-cover bg-center"
+        className="relative min-h-screen flex flex-col justify-center items-center text-white text-center px-4 sm:px-6 lg:px-12 bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(${HomePageImg})`,
         }}
       >
-        <div className="relative max-w-4xl mx-auto -mt-40 mb-12">
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 animate-fadeInDown">
+        {/* Hero Content */}
+        <div className="relative max-w-4xl mx-auto -mt-24 sm:-mt-32 md:-mt-40 mb-10 sm:mb-14 px-2">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 animate-fadeInDown leading-tight">
             Divine Services, Delivered to You
           </h1>
-          <p className="text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp">
-            Book authentic temple pujas, get prasad delivered, and experience spiritual services from trusted temples across India.
+          <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp px-2">
+            Book authentic temple pujas, get prasad delivered, and experience
+            spiritual services from trusted temples across India.
           </p>
 
+          {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInScale">
-            <Button href="/services" className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-lg font-bold text-lg">
+            <Button
+              href="/services"
+              className="bg-orange-600 hover:bg-orange-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg"
+            >
               Browse Services
             </Button>
-            <Button href="/temples" className="bg-white hover:bg-gray-100 text-orange-600 px-8 py-4 rounded-lg font-bold text-lg border border-orange-600">
+            <Button
+              href="/temples"
+              className="bg-white hover:bg-gray-100 text-orange-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg border border-orange-600"
+            >
               Explore Temples
             </Button>
           </div>
         </div>
 
-        <div class="w-full flex justify-center">
-          <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-[600px]">
+        {/* Search Box */}
+        <div className="w-full flex justify-center px-2 sm:px-4">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-[600px]">
             <input
               type="search"
               placeholder="Temple name / Place / Jyotirling / Popular Pooja"
-              class="flex-1 px-6 py-3 rounded-full border border-gray-300 shadow-md bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent min-w-0"
+              className="flex-1 px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-gray-300 shadow-md bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
             />
             <button
               type="button"
-              class="cursor-pointer px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-md transition-colors duration-300"
+              className="cursor-pointer px-5 sm:px-6 py-2 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-md transition-colors duration-300 text-sm sm:text-base"
             >
               Search
             </button>
           </div>
         </div>
 
-
-
-        {/* Scrolling Banner on top */}
+        {/* Scrolling Banner */}
         <div className="fixed bottom-0 left-0 w-full z-50">
           <ScrollingBanner offers={offersData} />
         </div>
-
       </section>
 
-      {/* Popular Services Section (overlapping Hero from ~60vh) */}
-      <section
-        className="relative mt-96 py-16 px-6 bg-transparent z-10"
-        style={{ marginTop: "-30vh" }} // overlaps hero nicely
+
+      {/* Popular Services Section */}
+      <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10"
+        style={{ marginTop: "-30vh" }}
       >
-        <div className="container mx-auto">
-          {/* Cards grid */}
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularServices.map((service, idx) => (
+            {popularPooja.map((service, idx) => (
               <div
                 key={idx}
-                className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 relative z-0
-             hover:border-orange-500 hover:shadow-2xl hover:scale-105
-             transition-transform transition-shadow duration-300 ease-in-out"
+                className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
               >
-                {/* Image section */}
                 <div className="relative overflow-hidden">
                   <img
                     src={service.image}
@@ -250,37 +223,22 @@ const HomePage = () => {
                     Popular
                   </div>
                 </div>
-
-                {/* Card content */}
                 <div className="p-5 flex flex-col gap-2">
-                  {/* Service Title */}
                   <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
-
-                  {/* Prices */}
                   <div className="flex items-center gap-3">
                     <span className="text-xl sm:text-2xl font-bold text-orange-600">{convertPrice(service.price)}</span>
-                    <span className="text-sm sm:text-base text-gray-400 line-through">{convertOriginalPrice(service.originalPrice)}</span>
                   </div>
-
-                  {/* Rating & Bookings */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <DecimalStarRating rating={service.rating} size={20} />
-                    </div>
+                    <DecimalStarRating rating={service.rating} size={20} />
                     <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
                   </div>
-
-                  {/* Book Now Button */}
                   <button className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
                     <FaShoppingCart className="mr-2" /> Book Now
                   </button>
                 </div>
               </div>
-
             ))}
           </div>
-
-          {/* "View All" link below the cards */}
           <div className="flex justify-end mt-6">
             <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
               View All <FaChevronRight className="ml-1" />
@@ -369,21 +327,22 @@ const HomePage = () => {
 
           {/* Grid of temples */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {templesData.map((t) => (
+            {templeData.slice(0, 4).map((temple) => (
               <div
-                key={t.id}
+                key={temple.id}
+                onClick={() => handleTempleClick(temple)}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100"
               >
-                <img src={t.image} alt={t.name} className="w-full h-48 object-cover" />
+                <img src={temple.img_src} alt={temple.name} className="w-full h-48 object-cover" />
                 <div className="p-5">
-                  <h3 className="font-bold text-xl mb-2">{t.name}</h3>
-                  <p className="text-gray-600 text-sm mb-3">{t.address}</p>
-                  <p className="text-gray-700 mb-4 line-clamp-2">{t.description}</p>
+                  <h3 className="font-bold text-xl mb-2">{temple.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">{temple.address}</p>
+                  <p className="text-gray-700 mb-4 line-clamp-2">{temple.description}</p>
                   <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
-                      <DecimalStarRating rating={t.rating} size={20} />
+                      <DecimalStarRating rating={temple.rating} size={20} uniqueKey={temple.id} />
                     </div>
-                    <span className="text-sm text-orange-600 font-semibold">{t.poojaType}</span>
+                    <span className="text-sm text-orange-600 font-semibold">{temple.poojaType}</span>
                   </div>
                   <button className="cursor-pointer w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
                     View Services
@@ -534,8 +493,10 @@ const HomePage = () => {
       </section>
 
       <DownloadAppSection />
-    </>
+    </div>
   );
+
+
 };
 
 export default HomePage;

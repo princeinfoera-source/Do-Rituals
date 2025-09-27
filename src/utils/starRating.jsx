@@ -1,8 +1,7 @@
-import React, { useId } from "react";
+import { useId } from "react";
 
-const DecimalStarRating = ({ rating, size = 28 }) => {
+const DecimalStarRating = ({ rating, size = 28, uniqueKey }) => {
   const totalStars = 5;
-  const uniqueId = useId();
 
   const starPath =
     "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z";
@@ -14,16 +13,18 @@ const DecimalStarRating = ({ rating, size = 28 }) => {
     return fill * 100;
   };
 
+  const safeRating = typeof rating === "number" && !isNaN(rating) ? rating : 0;
+
   return (
     <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
       {[...Array(totalStars)].map((_, i) => {
         const fillPercent = getFillPercent(i);
-        const gradId = `${uniqueId}-grad-${i}`;
+        const gradId = `grad-${uniqueKey}-${i}`; // use uniqueKey per card
 
         return (
           <svg
             key={i}
-            width={size}   // ⭐ dynamic size
+            width={size}
             height={size}
             viewBox="0 0 24 24"
             style={{ display: "inline-block" }}
@@ -44,14 +45,15 @@ const DecimalStarRating = ({ rating, size = 28 }) => {
         style={{
           marginLeft: "6px",
           fontWeight: "bold",
-          fontSize: "14px",   // 🔒 fixed text size
+          fontSize: "14px",
           color: "#374151",
         }}
       >
-        {rating.toFixed(1)}
+        {safeRating.toFixed(1)}
       </span>
     </div>
   );
 };
+
 
 export default DecimalStarRating;
