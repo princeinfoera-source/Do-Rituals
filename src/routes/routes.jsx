@@ -1,4 +1,3 @@
-// src/routes.jsx
 import { Routes, Route, Outlet, useParams, Navigate } from "react-router-dom";
 import DashboardLayout from "../layouts/layoutRestricted/DashboardLayout.jsx";
 import { useRole } from "../contexts/RoleContext.jsx";
@@ -12,13 +11,11 @@ import managerRoutes from "./managerRoutes.jsx";
 import priestRoutes from "./priestRoutes.jsx";
 import deliveryPartnerRoutes from "./deliveryPartnerRoutes.jsx";
 
-// Actual dashboard root for each role (to avoid props.element trickery)
 import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 import ManagerDashboard from "../pages/manager/ManagerDashboard.jsx";
 import PriestDashboard from "../pages/priest/PriestDashboard.jsx";
 import DeliveryPartnerDashboard from "../pages/delivery_partner/DeliveryPartnerDashboard.jsx";
 
-// Auth-protected dashboard routing
 function ProtectedRoute({ allowedRoles }) {
   const { role } = useRole();
   const { role: routeRole } = useParams();
@@ -51,23 +48,22 @@ export default function AppRoutes() {
       {userPublicRoutes}
 
       {/* Protected dashboard routes */}
-      <Route
-        element={<ProtectedRoute allowedRoles={Object.keys(rolePathMap)} />}
-      >
+      <Route element={<ProtectedRoute allowedRoles={Object.keys(rolePathMap)} />}>
         <Route path="dashboard/:role" element={<DashboardLayout />}>
-          {/* Dash root for the role */}
+          {/* Root index for dashboard role */}
           <Route index element={<RoleBasedHome />} />
+          {/* Role specific routes */}
           {adminRoutes}
           {managerRoutes}
           {priestRoutes}
           {deliveryPartnerRoutes}
-          {/* Panel-level catch-all: e.g. /dashboard/admin/blah */}
-          <Route path="*" element={<HomePage />} />
+          {/* Panel-level catch-all redirect to homepage */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Route>
 
-      {/* Global catch-all for ALL other unmatched URLs */}
-      <Route path="*" element={<HomePage />} />
+      {/* Global catch-all redirect to homepage (must come last) */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
