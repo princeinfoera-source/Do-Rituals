@@ -10,7 +10,7 @@ import Chadhava from "../pages/Chadhava.jsx";
 import Library from "../pages/Library.jsx";
 import Login from "../pages/Login.jsx";
 import Signup from "../pages/Signup.jsx";
-import SignUpRequest from "../pages/SignUpRequest.jsx";
+import SignUpRequest from "../pages/SignupRequest.jsx";
 import PujaDetail from "../pages/PujaDetail.jsx";
 import CheckoutPage from "../pages/CheckoutPage.jsx";
 
