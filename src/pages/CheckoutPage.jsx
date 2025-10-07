@@ -2,8 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaRupeeSign, FaCheckCircle, FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaLock } from 'react-icons/fa';
 
-// --- MOCK ICONS (Replacing react-icons/fa for runnability) ---
-// Note: In a real project, you'd install and use these directly from 'react-icons/fa' and 'react-icons/si'
 const FaRupeeSignMock = () => <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-1.8-15.6c-.3-.2-.6-.3-.9-.3-.5 0-.8.2-1.1.5s-.4.9-.4 1.5c0 .5.1 1 .4 1.3.3.4.6.5 1.1.5.3 0 .6-.1.9-.3l.4.9c-.3.2-.6.4-.9.5v.7h-1.5V10h1.5v2.8H7.3v1.5h.9c.2.2.4.3.6.4.2.1.4.1.6.1.4 0 .8-.2 1-.5s.4-.8.4-1.3c0-.5-.1-.9-.4-1.2-.3-.4-.6-.5-1-.5-.3 0-.6.1-.8.2l-.3-.7c.3-.2.6-.3 1-.4v-1.1h1.5V5.2h-1.5V4.4c.3-.2.6-.3.9-.3.2 0 .4 0 .6.1.2 0 .4.1.6.2l.4-1.1zM9.5 7.1c-.2.2-.4.3-.6.3-.2 0-.4-.1-.6-.3-.2-.2-.3-.4-.3-.6s.1-.4.3-.6c.2-.2.4-.3.6-.3.2 0 .4.1.6.3.2.2.3.4.3.6s-.1.4-.3.6z" /></svg>;
 const FaCheckCircleMock = () => <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-2-5.4l5.2-5.4-1.5-1.5-3.7 3.8-1.5-1.5-1.5 1.5 3 3z" /></svg>;
 const FaUserMock = () => <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-7 9a7 7 0 1 1 14 0H3z" /></svg>;
@@ -33,7 +31,6 @@ const defaultBookingDetails = {
     ],
 };
 
-// --- Checkout Page Component ---
 const CheckoutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -102,7 +99,6 @@ const CheckoutPage = () => {
                 </h1>
 
                 <div className="lg:flex lg:gap-8">
-                    {/* Left Column: Booking Summary & Details */}
                     <div className="lg:w-1/2">
                         <div className="bg-white p-8 rounded-2xl shadow-lg mb-8 border border-gray-200">
                             <div className="flex items-center gap-4 text-indigo-600 mb-6 border-b pb-4">
@@ -168,7 +164,6 @@ const CheckoutPage = () => {
                         </div>
                     </div>
 
-                    {/* Right Column: Customer Form & Payment Gateways */}
                     <div className="lg:w-1/2">
                         <form onSubmit={handlePayment} className="space-y-8">
                             <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
