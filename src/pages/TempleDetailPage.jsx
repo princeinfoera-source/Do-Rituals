@@ -3,9 +3,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
 import { templeData } from "../store/templeSampleData.js";
 import { prasadItems } from "../store/prasaad.js";
-import { popularPooja } from "../store/templeSampleData.js";
+import { popularPuja } from "../store/templeSampleData.js";
 import DecimalStarRating from "../utils/starRating.jsx";
 import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
+import ImgGallery from "../components/img_gallery/ImgGallery.jsx";
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();
 
@@ -183,10 +184,10 @@ const TempleDetailPage = () => {
       >
         <div className="max-w-7xl mx-auto">
           {/* <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
-            Pooja Offered
+            Puja Offered
           </h2> */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularPooja.map((service, idx) => (
+            {popularPuja.map((service, idx) => (
               <div
                 key={idx}
                 className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
@@ -253,35 +254,10 @@ const TempleDetailPage = () => {
         </section>
       )}
 
-      {/* Gallery Section */}
-      {images.length > 0 && (
-        <section className="w-full py-10 px-4 sm:px-6 bg-gradient-to-br from-yellow-100 to-amber-200">
-          <h2 className="text-4xl font-extrabold text-yellow-900 text-center mb-12">
-            Temple Gallery
-          </h2>
-          <div className="max-w-7xl mx-auto flex flex-col gap-6">
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <img
-                src={images[currentIndex]}
-                alt={`Temple image ${currentIndex + 1}`}
-                className="w-full h-[480px] object-cover rounded-2xl transition-all duration-700 ease-in-out"
-              />
-            </div>
-            <div className="flex gap-4 overflow-x-clip">
-              {images.map((image, idx) => (
-                <img
-                  key={idx}
-                  src={image}
-                  alt={`Temple thumbnail ${idx + 1}`}
-                  className={`w-24 h-24 object-cover rounded-lg cursor-pointer flex-shrink-0 transition-transform duration-300 ${idx === currentIndex ? "scale-105 shadow-lg border-4 border-yellow-400" : "opacity-70"
-                    }`}
-                  onClick={() => setCurrentIndex(idx)}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+
+      <ImgGallery images={images} />
+
+
 
       {/* About Section */}
       <section className="TempleDescription w-full py-16 px-4 sm:px-6 bg-white">

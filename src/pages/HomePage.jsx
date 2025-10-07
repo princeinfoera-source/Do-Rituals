@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import HomePageImg from "../../assets/imgs/HomePageImg.png";
-import DownloadAppSection from "../../components/DownloadAppSection.jsx";
-import Button from "../../components/ExploreAnimatedButton.jsx";
-import { testimonials, templeData } from "../../store/templeSampleData.js";
-import "../style.css";
+import HomePageImg from "../assets/imgs/HomePageImg.png";
+import DownloadAppSection from "../components/DownloadAppSection.jsx";
+import Button from "../components/ExploreAnimatedButton.jsx";
+import { testimonials, templeData } from "../store/templeSampleData.js";
+import "./style.css";
 import ScrollingBanner from "./ScrollingBanner.jsx";
-import { fetchCurrencyConversionInfo } from "../../utils/detectCurrency.js";
-import DecimalStarRating from "../../utils/starRating.jsx";
-import { prasadItems } from "../../store/prasaad.js";
-import { popularPooja } from "../../store/templeSampleData.js"
+import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
+import DecimalStarRating from "../utils/starRating.jsx";
+import { prasadItems } from "../store/prasaad.js";
+import { popularPuja } from "../store/templeSampleData.js"
+import SearchBox, { mockLocations } from "../components/SearchBox.jsx";
 
 
 const CARD_WIDTH = 260;
@@ -82,6 +83,17 @@ const parsePriceStringToNumber = (priceStr) => {
 };
 
 const HomePage = () => {
+  const [selectedLocation, setSelectedLocation] = useState(mockLocations[0]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleLocationChange = (location) => {
+    console.log(`Parent: Location updated to: ${location}`);
+    setSelectedLocation(location);
+  };
+
+  const handleSearchSubmit = () => {
+    console.log(`Parent: SEARCH EXECUTED: Query='${searchQuery}', Location='${selectedLocation}'`);
+  };
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currencyInfo, setCurrencyInfo] = useState(null);
@@ -142,6 +154,8 @@ const HomePage = () => {
     });
   };
 
+  const searchBoxRef = useRef(null);
+
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -152,47 +166,31 @@ const HomePage = () => {
         }}
       >
         {/* Hero Content */}
-        <div className="relative max-w-4xl mx-auto -mt-24 sm:-mt-32 md:-mt-40 mb-10 sm:mb-14 px-2">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 animate-fadeInDown leading-tight">
+        <div className="relative mx-auto -mt-24 sm:-mt-32 md:-mt-80 mb-10 sm:mb-14 px-2 w-full max-w-7xl">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4 animate-fadeInDown leading-tight whitespace-normal lg:whitespace-nowrap">
             Divine Services, Delivered to You
           </h1>
-          <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp px-2">
+
+          <p className="text-base sm:text-lg md:text-xl leading-relaxed mb-8 animate-fadeInUp px-2 max-w-4xl mx-auto">
             Book authentic temple pujas, get prasad delivered, and experience
             spiritual services from trusted temples across India.
           </p>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInScale">
-            <Button
-              href="/services"
-              className="bg-orange-600 hover:bg-orange-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg"
-            >
-              Browse Services
-            </Button>
-            <Button
-              href="/temples"
-              className="bg-white hover:bg-gray-100 text-orange-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg border border-orange-600"
-            >
-              Explore Temples
-            </Button>
-          </div>
+          {/* Buttons are commented out - keep as is */}
         </div>
 
         {/* Search Box */}
-        <div className="w-full flex justify-center px-2 sm:px-4">
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:max-w-[600px]">
-            <input
-              type="search"
-              placeholder="Temple name / Place / Jyotirling / Popular Pooja"
-              className="flex-1 px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-gray-300 shadow-md bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
-            />
-            <button
-              type="button"
-              className="cursor-pointer px-5 sm:px-6 py-2 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-md transition-colors duration-300 text-sm sm:text-base"
-            >
-              Search
-            </button>
-          </div>
+        <div className="w-full max-w-4xl px-4 sm:px-6 lg:px-0">
+          <SearchBox
+            locations={mockLocations}
+            selectedLocation={selectedLocation}
+            onLocationChange={handleLocationChange}
+            searchQuery={searchQuery}
+            onSearchQueryChange={setSearchQuery}
+            onSearchSubmit={handleSearchSubmit}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+          />
         </div>
 
         {/* Scrolling Banner */}
@@ -204,11 +202,11 @@ const HomePage = () => {
 
       {/* Popular Services Section */}
       <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10"
-        style={{ marginTop: "-30vh" }}
+        style={{ marginTop: "-50vh" }}
       >
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularPooja.map((service, idx) => (
+            {popularPuja.map((service, idx) => (
               <div
                 key={idx}
                 className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
@@ -342,7 +340,7 @@ const HomePage = () => {
                     <div className="flex items-center">
                       <DecimalStarRating rating={temple.rating} size={20} uniqueKey={temple.id} />
                     </div>
-                    <span className="text-sm text-orange-600 font-semibold">{temple.poojaType}</span>
+                    <span className="text-sm text-orange-600 font-semibold">{temple.pujaType}</span>
                   </div>
                   <button className="cursor-pointer w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-300">
                     View Services

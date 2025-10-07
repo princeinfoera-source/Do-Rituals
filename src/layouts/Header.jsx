@@ -5,7 +5,6 @@ import { templeData } from "../store/templeSampleData";
 import { useNavigate, useLocation } from "react-router-dom";
 import Lottie from "lottie-react";
 import LotteUserProfile from "../assets/lotte/User.json";
-import Login from "../pages/Login.jsx";
 
 const OmIcon = () => (
   <svg
@@ -24,14 +23,11 @@ const Header = ({ setHeaderHeight }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHomePage, setIsHomePage] = useState(true);
-  const [showLogin, setShowLogin] = useState(false);
   const [isTempleSubmenuOpen, setIsTempleSubmenuOpen] = useState(false);
   const [isSelected, setIsSelected] = useState("Home");
 
   const headerRef = useRef(null);
-  const dropdownTimeoutRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -82,13 +78,10 @@ const Header = ({ setHeaderHeight }) => {
     setIsTempleSubmenuOpen(false);
   };
 
-  const handleLoginClick = (e) => {
-    e.preventDefault();
-    setShowLogin(true);
+  const handleLoginClick = () => {
+    navigate("/login");
     setIsMobileMenuOpen(false);
   };
-
-  const handleCloseLogin = () => setShowLogin(false);
 
   const toggleMobileMenu = () => {
     if (isMobileMenuOpen) setIsTempleSubmenuOpen(false);
@@ -99,7 +92,7 @@ const Header = ({ setHeaderHeight }) => {
     if (isScrolled || isHovered || !isHomePage) {
       return "text-gray-700";
     }
-    if (isHomePage) return "text-grey";
+    if (isHomePage) return "text-gray-700";
     return "text-gray-900";
   };
 
@@ -114,15 +107,13 @@ const Header = ({ setHeaderHeight }) => {
   };
 
   const getNavLinkClass = (name) =>
-    `relative group hover:text-orange-600 transition ${
-      isSelected === name ? "text-orange-600" : ""
+    `relative group hover:text-orange-600 transition ${isSelected === name ? "text-orange-600" : ""
     }`;
 
   const underlineSpan = (name) => (
     <span
-      className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 transition-transform duration-300 ease-out ${
-        isSelected === name ? "scale-x-100" : "scale-x-0"
-      }`}
+      className={`absolute bottom-0 left-0 w-full h-0.5 bg-orange-500 transition-transform duration-300 ease-out ${isSelected === name ? "scale-x-100" : "scale-x-0"
+        }`}
     />
   );
 
@@ -132,11 +123,7 @@ const Header = ({ setHeaderHeight }) => {
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${getBackgroundColor()}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={
-        isHomePage && headerRef.current
-          ? { paddingTop: `-${headerRef.current.offsetHeight}px` }
-          : undefined
-      }
+    // Removed invalid negative paddingTop
     >
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex-shrink-0">
@@ -156,7 +143,6 @@ const Header = ({ setHeaderHeight }) => {
             {underlineSpan("Home")}
           </a>
 
-          {/* Temples button navigates directly to /temples, dropdown commented out */}
           <div className="relative">
             <a href="/temples" className={getNavLinkClass("Temples")}>
               Temples
@@ -174,7 +160,10 @@ const Header = ({ setHeaderHeight }) => {
             {underlineSpan("Chadhava")}
           </a>
 
-          <a href="/pandit-on-call" className={getNavLinkClass("Pandit on call")}>
+          <a
+            href="/pandit-on-call"
+            className={getNavLinkClass("Pandit on call")}
+          >
             Pandit on call
             {underlineSpan("Pandit on call")}
           </a>
@@ -199,6 +188,13 @@ const Header = ({ setHeaderHeight }) => {
           <div
             className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden cursor-pointer"
             onClick={handleLoginClick}
+            role="button"
+            tabIndex={0}
+            onKeyPress={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleLoginClick();
+              }
+            }}
           >
             <Lottie animationData={LotteUserProfile} loop autoplay />
           </div>
@@ -217,9 +213,8 @@ const Header = ({ setHeaderHeight }) => {
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white shadow-lg py-4 border-t border-gray-100 md:hidden overflow-hidden h-screen animate-slideDown">
           <nav
-            className={`flex flex-col items-center space-y-4 font-medium text-gray-700 transition-transform duration-300 ${
-              isTempleSubmenuOpen ? "-translate-x-full" : "translate-x-0"
-            }`}
+            className={`flex flex-col items-center space-y-4 font-medium text-gray-700 transition-transform duration-300 ${isTempleSubmenuOpen ? "-translate-x-full" : "translate-x-0"
+              }`}
           >
             <a
               href="/"
@@ -294,9 +289,8 @@ const Header = ({ setHeaderHeight }) => {
           </nav>
 
           <div
-            className={`absolute top-0 w-full h-full bg-white transition-transform duration-300 transform ${
-              isTempleSubmenuOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+            className={`absolute top-0 w-full h-full bg-white transition-transform duration-300 transform ${isTempleSubmenuOpen ? "translate-x-0" : "translate-x-full"
+              }`}
           >
             <div className="px-4 py-4 h-full overflow-y-auto">
               <button
@@ -325,28 +319,6 @@ const Header = ({ setHeaderHeight }) => {
                 ))}
               </nav>
             </div>
-          </div>
-        </div>
-      )}
-
-      {showLogin && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[100] p-4 animate-fadeIn"
-          onClick={handleCloseLogin}
-        >
-          <div
-            className="bg-white rounded-lg p-6 max-w-sm w-full relative animate-zoomIn"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={handleCloseLogin}
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 cursor-pointer"
-              aria-label="Close"
-            >
-              &#x2715;
-            </button>
-
-            <Login />
           </div>
         </div>
       )}

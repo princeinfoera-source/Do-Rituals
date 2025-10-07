@@ -2,9 +2,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import PriestDashboard from "../pages/priest/PriestDashboard.jsx";
-import UpcomingPooja from "../pages/priest/UpcomingPooja.jsx";
+import UpcomingPuja from "../pages/priest/UpcomingPuja.jsx";
 
 export default [
   <Route path="priest" element={<PriestDashboard />} />,
-  <Route path="upcoming-pooja" element={<UpcomingPooja />} />,
+  <Route path="upcoming-puja" element={<UpcomingPuja />} />,
 ];

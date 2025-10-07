@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
-import { templeData, popularPooja } from "../store/templeSampleData.js";
+import { templeData, popularPuja } from "../store/templeSampleData.js";
 import DecimalStarRating from "../utils/starRating.jsx";
 import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
 import templeMap from "../assets/imgs/templeMap.webp"
@@ -64,10 +64,10 @@ const Temples = () => {
     <div className="overflow-x-hidden min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full min-h-screen flex flex-col inset-0 bg-gradient-to-b from-yellow-50 via-yellow-100 to-yellow-200 to-yellow-200/0">
-        {/* Marquee / Scrolling Pooja Cards */}
+        {/* Marquee / Scrolling Puja Cards */}
         <div className="relative z-20 w-full overflow-hidden bg-white/20 backdrop-blur-md border-b border-white/30 py-3 shadow-sm">
           <div className="flex animate-slide whitespace-nowrap">
-            {[...popularPooja, ...popularPooja, ...popularPooja].map(
+            {[...popularPuja, ...popularPuja, ...popularPuja].map(
               ({ name, price, image }, idx) => (
                 <div
                   key={`${name}-${idx}`}
@@ -125,12 +125,12 @@ const Temples = () => {
               Divine Services, Delivered to You
             </h1>
             <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
-              Experience the blessings of sacred rituals, prasad, and poojas
+              Experience the blessings of sacred rituals, prasad, and pujas
               from the holiest cities of India — delivered with devotion and
               care, right to your doorstep.
             </p>
             <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-xl shadow-lg transition">
-              Book a Pooja Now
+              Book a Puja Now
             </button>
           </div>
 
@@ -200,7 +200,7 @@ const Temples = () => {
             Popular Services
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularPooja.map((service, idx) => (
+            {popularPuja.map((service, idx) => (
               <div
                 key={idx}
                 className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"

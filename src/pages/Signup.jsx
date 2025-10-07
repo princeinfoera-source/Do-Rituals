@@ -8,9 +8,8 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      `Signup attempted as User with email: ${email} and password: ${password}`
-    );
+    console.log(`Signup attempted as User with email: ${ email }`);
+    // TODO: Add real signup logic here (API call, validation etc.)
     if (onSignup) {
       onSignup({ email, password, type: "User" });
     }
@@ -18,6 +17,7 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
 
   const onGoogleSuccess = (credentialResponse) => {
     console.log("Google Signup Success: ", credentialResponse);
+    // TODO: Process Google credentialResponse here for signup
     if (onSignup) {
       onSignup({
         type: "User",
@@ -28,7 +28,7 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
   };
 
   const onGoogleError = () => {
-    console.log("Google Signup Login Failed");
+    console.log("Google Signup Failed");
   };
 
   return (
@@ -39,15 +39,17 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
           Sign Up
         </h2>
       </div>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          type="text"
+          type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-gray-800 placeholder-gray-400"
           required
         />
+
         <input
           type="password"
           placeholder="Password"
@@ -56,6 +58,7 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none text-gray-800 placeholder-gray-400"
           required
         />
+
         <button
           type="submit"
           className="w-full py-3 rounded-lg font-semibold text-lg text-white bg-gradient-to-r from-orange-500 to-yellow-600 shadow-lg transition-all cursor-pointer duration-300 hover:from-orange-600 hover:to-yellow-700 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50"

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Logo from "../assets/imgs/doRituals.webp";
 import {
   FaFacebook,
@@ -11,23 +10,24 @@ import {
   FaFax,
   FaClock,
 } from "react-icons/fa";
-import Login from "../pages/Login.jsx";
+import { useNavigate } from "react-router-dom";
 import "./layoutsStyle.css";
 
 const Footer = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLoginClick = (e) => {
+  const handleUserLoginClick = (e) => {
     e.preventDefault();
-    setShowLogin(true);
+    navigate("/login");
   };
 
-  const handleCloseLogin = () => {
-    setShowLogin(false);
+  const handlePriestLoginClick = (e) => {
+    e.preventDefault();
+    navigate("/dashboard");
   };
 
   return (
-    <footer className="bg-amber-50 text-gray-800 py-8 mt-20 border-t border-amber-200 w-full px-4 sm:px-6 lg:px-[5%]">
+    <footer className="bg-amber-50 text-gray-800 py-8 pt-6 border-t border-amber-200 w-full px-4 sm:px-6 lg:px-[5%]">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-8 lg:gap-x-8">
         {/* Brand & Description Column */}
         <div className="flex flex-col h-full">
@@ -118,8 +118,8 @@ const Footer = () => {
             <li>
               <a
                 href="/user-login"
-                className="text-gray-600 hover:text-yellow-700 transition-colors duration-300"
-                onClick={handleLoginClick}
+                onClick={handleUserLoginClick}
+                className="text-gray-600 hover:text-yellow-700 transition-colors duration-300 cursor-pointer"
               >
                 <u>User Login</u>
               </a>
@@ -127,8 +127,8 @@ const Footer = () => {
             <li>
               <a
                 href="/priest-login"
-                className="text-gray-600 hover:text-yellow-700 transition-colors duration-300"
-                onClick={handleLoginClick}
+                onClick={handlePriestLoginClick}
+                className="text-gray-600 hover:text-yellow-700 transition-colors duration-300 cursor-pointer"
               >
                 <u>Priest Login</u>
               </a>
@@ -221,7 +221,11 @@ const Footer = () => {
             Join Our Newsletter
           </h4>
           <p className="text-sm text-gray-600 mb-3">
-            Stay connected for spiritual insights and exclusive offers. Receive uplifting messages, meditations, and rituals to nurture your soul. Discover tips and wisdom to enhance your journey daily. Be the first to hear about events, workshops, and gatherings. Enjoy exclusive discounts on rituals and products for your growth.
+            Stay connected for spiritual insights and exclusive offers. Receive
+            uplifting messages, meditations, and rituals to nurture your soul.
+            Discover tips and wisdom to enhance your journey daily. Be the first
+            to hear about events, workshops, and gatherings. Enjoy exclusive
+            discounts on rituals and products for your growth.
           </p>
           <form className="flex flex-col gap-2">
             <input
@@ -238,28 +242,6 @@ const Footer = () => {
           </form>
         </div>
       </div>
-
-      {/* Modal Login */}
-      {showLogin && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
-          onClick={handleCloseLogin}
-        >
-          <div
-            className="bg-white rounded-lg p-6 max-w-sm w-full relative overflow-auto max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={handleCloseLogin}
-              className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 rotate-on-hover cursor-pointer"
-              aria-label="Close"
-            >
-              &#x2715;
-            </button>
-            <Login />
-          </div>
-        </div>
-      )}
 
       {/* Copyright */}
       <div className="text-center text-gray-500 text-xs mt-10 border-t border-amber-200 pt-6 px-6">

@@ -581,9 +581,9 @@ export const testimonials = [
 export const servicesData = [
   {
     icon: FaPrayingHands({ className: "text-4xl text-orange-600" }),
-    title: "Pooja Booking & Live Darshan",
+    title: "Puja Booking & Live Darshan",
     description:
-      "Book your pooja online and experience live darshan from anywhere in the world.",
+      "Book your puja online and experience live darshan from anywhere in the world.",
   },
   {
     icon: FaOm({ className: "text-4xl text-orange-600" }),
@@ -656,7 +656,7 @@ export const donationData = [
   },
 ];
 
-export const popularPooja = [
+export const popularPuja = [
   {
     name: "Maha Rudrabhishek",
     price: 1251,
