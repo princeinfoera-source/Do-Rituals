@@ -48,13 +48,14 @@ const SearchBox = ({
   }, [isDropdownOpen]);
 
   return (
-    <div className="w-full flex justify-center px-4 md:px-8">
+    // Added relative & overflow-visible here to fix dropdown clipping
+    <div className="w-full flex justify-center px-4 md:px-8 relative overflow-visible">
       <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full max-w-4xl">
 
         {/* Search Input + Location */}
         <div
           ref={searchBarRef}
-          className={`flex-1 w-full flex border rounded-md sm:rounded-l-full sm:rounded-r-none shadow-lg bg-white transition-shadow duration-300 overflow-hidden
+          className={`flex-1 w-full flex border rounded-md sm:rounded-l-full sm:rounded-r-none shadow-lg bg-white transition-shadow duration-300 overflow-visible
             ${isBtnActive ? 'border-orange-500 ring-4 ring-orange-500/50' : 'border-gray-300'}`}
           onMouseEnter={() => setIsBtnActive(true)}
           onMouseLeave={() => setIsBtnActive(false)}
@@ -89,7 +90,7 @@ const SearchBox = ({
               {isDropdownOpen && (
                 <div
                   id="location-menu"
-                  className="absolute z-30 right-0 top-full mt-2 w-64 rounded-lg shadow-2xl bg-white border border-gray-100 overflow-hidden"
+                  className="absolute z-50 right-0 top-full mt-2 w-64 rounded-lg shadow-2xl bg-white border border-gray-100 overflow-hidden"
                   role="menu"
                   aria-orientation="vertical"
                 >

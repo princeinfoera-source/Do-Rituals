@@ -153,6 +153,15 @@ const HomePage = () => {
     });
   };
 
+  const handleClickPuja = (puja) => {
+    const pujaNameParam = puja.name.toLowerCase().replace(/\s+/g, "-");
+    navigate(`/puja/${pujaNameParam}`, { state: { puja } });
+  };
+
+  const handleSelectPuja = (service) => {
+    handleClick(service);
+  };
+
   const searchBoxRef = useRef(null);
 
   return (
@@ -221,48 +230,59 @@ const HomePage = () => {
           />
         </div>
 
+
         {/* Scrolling Banner */}
         <div className="fixed bottom-0 left-0 w-full z-50">
           <ScrollingBanner offers={offersData} />
         </div>
       </section>
 
-
       {/* Popular Services Section */}
       <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10 -mt-[40vh] md:-mt-[40vh] sm:-mt-[40vh]"
       >
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularPuja.map((service, idx) => (
-              <div
-                key={idx}
-                className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.name}
-                    className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
-                  />
-                  <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                    Popular
+          <div className="cursor-pointer flex gap-6 pt-5 overflow-x-auto w-full h-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 snap-start px-4">
+              {popularPuja.map((service, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl transition-shadow duration-300 snap-center"
+                  onClick={() => handleSelectPuja(service)}
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.name}
+                      className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                    />
+                    <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                      Popular
+                    </div>
+                  </div>
+                  <div className="p-5 flex flex-col gap-2">
+                    <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl sm:text-2xl font-bold text-orange-600">
+                        {convertPrice(service.price)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <DecimalStarRating rating={service.rating} size={20} />
+                      <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClickPuja(service);
+                      }}
+                      className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg"
+                    >
+                      <FaShoppingCart className="mr-2" /> Book Now
+                    </button>
                   </div>
                 </div>
-                <div className="p-5 flex flex-col gap-2">
-                  <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl sm:text-2xl font-bold text-orange-600">{convertPrice(service.price)}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <DecimalStarRating rating={service.rating} size={20} />
-                    <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
-                  </div>
-                  <button className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
-                    <FaShoppingCart className="mr-2" /> Book Now
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <div className="flex justify-end mt-6">
             <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">

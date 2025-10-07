@@ -17,11 +17,8 @@ const Puja = () => {
   const navigate = useNavigate();
   const carouselRef = useRef(null);
 
-  // This is the key update: passing data via state
   const handleClick = (puja) => {
-    // Construct the URL using the name for SEO and direct linking
     const pujaNameParam = puja.name.toLowerCase().replace(/\s+/g, "-");
-    // Navigate to the dynamic route, but also pass the full object in state
     navigate(`/puja/${pujaNameParam}`, { state: { puja } });
   };
 
