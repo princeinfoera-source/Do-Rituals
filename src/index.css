@@ -1,15 +1,9 @@
 @import "tailwindcss";
 
-/* Hide Google Translate Bar */
 .goog-te-banner-frame.skiptranslate {
   display: none !important;
 }
 
-/* body {
-  top: 0px !important;
-} */
-
-/* Remove Google Branding */
 .goog-logo-link,
 .goog-te-gadget-icon {
   display: none !important;

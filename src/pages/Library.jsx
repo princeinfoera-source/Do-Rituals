@@ -65,7 +65,7 @@ const Library = () => {
                   <img
                     src={image}
                     alt={name}
-                    className="w-10 h-10 rounded-md object-cover mr-2"
+                    className="w-10 h-10 rounded-md object-fit mr-2"
                   />
                   <div className="flex flex-col">
                     <span className="text-xs font-semibold text-gray-800 truncate">
@@ -171,7 +171,7 @@ const Library = () => {
                   <img
                     src={`https://picsum.photos/280/160?random=${idx + 1}`}
                     alt={item?.name || "Devotional Content"}
-                    className="object-cover w-full h-40 rounded-t-lg"
+                    className="object-fit w-full h-40 rounded-t-lg"
                   />
                   <div className="p-3 flex-1 flex flex-col justify-between">
                     <h3 className="text-md font-semibold text-gray-900 truncate mb-1">

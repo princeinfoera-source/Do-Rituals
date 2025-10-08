@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useLocation, useParams, useNavigate, Link } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
 import { templeData, popularPuja } from "../store/templeSampleData.js";
 import DecimalStarRating from "../utils/starRating.jsx";
 import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
 import templeMap from "../assets/imgs/templeMap.webp"
+import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
+
 
 const Temples = () => {
   const navigate = useNavigate();
@@ -64,59 +66,8 @@ const Temples = () => {
     <div className="overflow-x-hidden min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full min-h-screen flex flex-col inset-0 bg-gradient-to-b from-yellow-50 via-yellow-100 to-yellow-200 to-yellow-200/0">
-        {/* Marquee / Scrolling Puja Cards */}
-        <div className="relative z-20 w-full overflow-hidden bg-white/20 backdrop-blur-md border-b border-white/30 py-3 shadow-sm">
-          <div className="flex animate-slide whitespace-nowrap">
-            {[...popularPuja, ...popularPuja, ...popularPuja].map(
-              ({ name, price, image }, idx) => (
-                <div
-                  key={`${name}-${idx}`}
-                  className="inline-flex cursor-pointer items-center bg-white/30 backdrop-blur-sm border border-yellow-200/40 rounded-xl px-3 py-2 mx-2 shadow hover:scale-105 transition-transform duration-300 min-w-[140px]"
-                >
-                  <img
-                    src={image}
-                    alt={name}
-                    className="w-10 h-10 rounded-md object-cover mr-2"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-gray-800 truncate">
-                      {name}
-                    </span>
-                    <span className="text-[11px] text-yellow-700 font-bold">
-                      {price}
-                    </span>
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        </div>
 
-        <style>
-          {`
-      @keyframes slide {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-33.33%); }
-      }
-      .animate-slide {
-        display: flex;
-        width: max-content;
-        animation: slide 25s linear infinite;
-      }
-      .animate-slide:hover {
-        animation-play-state: paused;
-      }
-
-      /* Hide scrollbar for mobile filter scroll */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-    `}
-        </style>
+        <ScrollingTopMarquee pujaData={popularPuja} />
 
         {/* Hero Text + Image */}
         <div className="flex flex-col lg:flex-row items-center justify-between px-6 lg:px-16 py-6 lg:py-12 gap-10">
@@ -138,7 +89,7 @@ const Temples = () => {
             <img
               src={templeMap}
               alt="Hero"
-              className="rounded-2xl shadow-lg object-cover max-h-[400px] w-full lg:w-auto"
+              className="rounded-2xl shadow-lg object-fit max-h-[400px] w-full lg:w-auto"
             />
           </div>
         </div>
@@ -157,7 +108,7 @@ const Temples = () => {
               aria-pressed={filter === city.name}
             >
               <img
-                className="h-12 w-12 rounded-lg mb-2 object-cover shadow-sm"
+                className="h-12 w-12 rounded-lg mb-2 object-fit shadow-sm"
                 src={city.img}
                 alt={city.name}
               />
@@ -182,7 +133,7 @@ const Temples = () => {
                 <img
                   src={temple.images?.[0]}
                   alt={temple.name}
-                  className="w-full h-40 object-cover rounded-lg mb-4"
+                  className="w-full h-40 object-fit rounded-lg mb-4"
                 />
                 <span className="text-lg font-semibold text-gray-900 truncate text-center">
                   {temple.name}
@@ -209,7 +160,7 @@ const Temples = () => {
                   <img
                     src={service.image}
                     alt={service.name}
-                    className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                    className="w-full h-52 object-fit rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
                   />
                   <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
                     Popular
@@ -230,9 +181,12 @@ const Temples = () => {
                       {service.bookings} booked
                     </span>
                   </div>
-                  <button className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
+                  <Link
+                    to="/puja"
+                    className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg"
+                  >
                     <FaShoppingCart className="mr-2" /> Book Now
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -264,7 +218,7 @@ const Temples = () => {
               <img
                 src={temple.images?.[0]}
                 alt={temple.name}
-                className="rounded-2xl shadow-2xl w-full h-80 object-cover"
+                className="rounded-2xl shadow-2xl w-full h-80 object-fit"
               />
             </div>
           </div>
@@ -282,7 +236,7 @@ const Temples = () => {
               <img
                 src={images[currentIndex]}
                 alt={`Temple image ${currentIndex + 1}`}
-                className="w-full h-[480px] object-cover rounded-2xl transition-all duration-700 ease-in-out"
+                className="w-full h-[480px] object-fit rounded-2xl transition-all duration-700 ease-in-out"
               />
             </div>
             <div className="flex gap-4 overflow-x-auto">
@@ -291,7 +245,7 @@ const Temples = () => {
                   key={idx}
                   src={image}
                   alt={`Temple thumbnail ${idx + 1}`}
-                  className={`w-24 h-24 object-cover rounded-lg cursor-pointer flex-shrink-0 transition-transform duration-300 ${idx === currentIndex
+                  className={`w-24 h-24 object-fit rounded-lg cursor-pointer flex-shrink-0 transition-transform duration-300 ${idx === currentIndex
                     ? "scale-105 shadow-lg border-4 border-yellow-400"
                     : "opacity-70"
                     }`}

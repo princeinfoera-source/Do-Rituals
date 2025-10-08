@@ -1,18 +1,3 @@
-/* @keyframes fadeOutWave {                              ------>  To remove the content with wavy effect
-  0% {
-    opacity: 1;
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translateY(-5px) rotate(-2deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px) rotate(5deg);
-  }
-} */
-
 /* Fade In Down Animation for Heading */
 @keyframes fadeInDown {
   0% {

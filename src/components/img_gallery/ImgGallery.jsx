@@ -68,7 +68,7 @@ const ImgGallery = ({ images }) => {
                             <img
                                 src={imgSrc}
                                 alt={`User uploaded image ${index + 1}`}
-                                className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+                                className="w-full h-auto object-fit transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                                 onError={(e) => {
                                     e.target.src =
@@ -163,7 +163,7 @@ const ImgGallery = ({ images }) => {
                                 key={i}
                                 src={thumb}
                                 alt={`Preview ${i + 1}`}
-                                className={`w-20 h-20 object-cover rounded-lg cursor-pointer border-2 transition-all duration-200 ${i === selectedImageIndex ? "border-white scale-105" : "border-transparent opacity-70 hover:opacity-100"
+                                className={`w-20 h-20 object-fit rounded-lg cursor-pointer border-2 transition-all duration-200 ${i === selectedImageIndex ? "border-white scale-105" : "border-transparent opacity-70 hover:opacity-100"
                                     }`}
                                 onClick={() => setSelectedImageIndex(i)}
                             />

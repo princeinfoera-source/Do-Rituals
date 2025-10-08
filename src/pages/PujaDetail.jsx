@@ -205,9 +205,9 @@ const PujaDetail = () => {
     return (
         <div className="w-full min-h-screen bg-gray-50 py-10 font-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-4xl font-extrabold text-gray-900 mb-2 leading-tight">
+                <h2 className="text-3xl sm:text-4xl font-extrabold mb-5 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
                     {data.name}
-                </h1>
+                </h2>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 mb-8 pb-4 border-b border-gray-200">
                     <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1 bg-orange-500 text-white px-3 py-1 rounded-full text-lg font-bold shadow-md">
@@ -228,7 +228,7 @@ const PujaDetail = () => {
                             <img
                                 src={data.image}
                                 alt={data.name}
-                                className="w-full h-96 object-cover rounded-xl mb-6 shadow-md"
+                                className="w-full h-96 object-fit rounded-xl mb-6 shadow-md"
                             />
                             <div className="flex items-center gap-3 mb-8 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
                                 <FaMapMarkerAlt />
@@ -261,7 +261,9 @@ const PujaDetail = () => {
                         </div>
 
                         <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
-                            <h3 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Prasad / Chadawa (Optional)</h3>
+                            <h2 className="text-3xl sm:text-4xl font-extrabold mb-5 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
+                                Prasad / Chadawa
+                            </h2>
                             <p className="text-gray-600 mb-4">Select items to be offered on your behalf during the Puja.</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {data.prasadCards.map((card) => (
@@ -277,7 +279,9 @@ const PujaDetail = () => {
                         </div>
 
                         <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
-                            <h3 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Daan Punya (Charity & Seva)</h3>
+                            <h2 className="text-3xl sm:text-4xl font-extrabold mb-5 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
+                                Daan Punya
+                            </h2>
                             <p className="text-gray-600 mb-4">Contribute to charity and spiritual services for added blessings.</p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {data.daanPunyaItems.map((item) => (

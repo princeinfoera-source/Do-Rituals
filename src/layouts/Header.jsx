@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaBars, FaTimes, FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import Logo from "../assets/imgs/doRituals.webp";
 import { templeData } from "../store/templeSampleData";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import LotteUserProfile from "../assets/lotte/User.json";
 
@@ -38,8 +38,8 @@ const Header = ({ setHeaderHeight }) => {
     if (path === "/") setIsSelected("Home");
     else if (path.startsWith("/temples")) setIsSelected("Temples");
     else if (path.startsWith("/puja")) setIsSelected("Puja");
-    else if (path.startsWith("/chadhava")) setIsSelected("Chadhava");
-    else if (path.startsWith("/pandit-on-call")) setIsSelected("Pandit on call");
+    else if (path.startsWith("/Prasaad")) setIsSelected("Prasaad");
+    else if (path.startsWith("/panditJi")) setIsSelected("Pandit on call");
     else if (path.startsWith("/astrology")) setIsSelected("Astrology");
     else if (path.startsWith("/library")) setIsSelected("Library");
     else setIsSelected("");
@@ -135,49 +135,46 @@ const Header = ({ setHeaderHeight }) => {
           </a>
         </div>
 
-        <nav
-          className={`hidden md:flex flex-grow justify-center font-medium ${getTextColor()} gap-6 lg:gap-8`}
-        >
-          <a href="/" className={getNavLinkClass("Home")}>
+
+        <nav className={`hidden md:flex flex-grow justify-center font-medium ${getTextColor()} gap-6 lg:gap-8`}>
+          <Link to="/" className={getNavLinkClass("Home")}>
             Home
             {underlineSpan("Home")}
-          </a>
+          </Link>
 
           <div className="relative">
-            <a href="/temples" className={getNavLinkClass("Temples")}>
+            <Link to="/temples" className={getNavLinkClass("Temples")}>
               Temples
               {underlineSpan("Temples")}
-            </a>
+            </Link>
           </div>
 
-          <a href="/puja" className={getNavLinkClass("Puja")}>
+          <Link to="/puja" className={getNavLinkClass("Puja")}>
             Puja
             {underlineSpan("Puja")}
-          </a>
+          </Link>
 
-          <a href="/chadhava" className={getNavLinkClass("Chadhava")}>
-            Chadhava
-            {underlineSpan("Chadhava")}
-          </a>
+          <Link to="/Prasaad" className={getNavLinkClass("Prasaad")}>
+            Order Prasaad
+            {underlineSpan("Prasaad")}
+          </Link>
 
-          <a
-            href="/pandit-on-call"
-            className={getNavLinkClass("Pandit on call")}
-          >
+          <Link to="/panditJi" className={getNavLinkClass("Pandit on call")}>
             Pandit on call
             {underlineSpan("Pandit on call")}
-          </a>
+          </Link>
 
-          <a href="/astrology" className={getNavLinkClass("Astrology")}>
+          <Link to="/astrology" className={getNavLinkClass("Astrology")}>
             Astrology
             {underlineSpan("Astrology")}
-          </a>
+          </Link>
 
-          <a href="/library" className={getNavLinkClass("Library")}>
+          <Link to="/library" className={getNavLinkClass("Library")}>
             Library
             {underlineSpan("Library")}
-          </a>
+          </Link>
         </nav>
+
 
         <div className="flex-shrink-0 flex items-center space-x-3 sm:space-x-4">
           <button className="hidden md:block cursor-pointer px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-700 text-white font-medium shadow-md hover:from-orange-600 hover:to-amber-800 transition transform hover:-translate-y-0.5">
@@ -241,15 +238,15 @@ const Header = ({ setHeaderHeight }) => {
             </a>
 
             <a
-              href="/chadhava"
+              href="/Prasaad"
               onClick={() => setIsMobileMenuOpen(false)}
               className="hover:text-orange-600 transition"
             >
-              Chadhava
+              Prasaad
             </a>
 
             <a
-              href="/pandit-on-call"
+              href="/panditJi"
               onClick={() => setIsMobileMenuOpen(false)}
               className="hover:text-orange-600 transition"
             >

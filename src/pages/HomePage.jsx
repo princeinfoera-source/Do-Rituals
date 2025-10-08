@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import HomePageImg from "../assets/imgs/HomePageImg.png";
 import DownloadAppSection from "../components/DownloadAppSection.jsx";
@@ -12,6 +12,7 @@ import DecimalStarRating from "../utils/starRating.jsx";
 import { prasadItems } from "../store/prasaad.js";
 import { popularPuja } from "../store/templeSampleData.js"
 import SearchBox, { mockLocations } from "../components/SearchBox.jsx";
+import ViewAllBtn from "../components/ViewAllBtn.jsx";
 
 const CARD_WIDTH = 260;
 const VISIBLE_CARDS = 5;
@@ -253,7 +254,7 @@ const HomePage = () => {
                     <img
                       src={service.image}
                       alt={service.name}
-                      className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                      className="w-full h-52 object-fit rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
                     />
                     <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
                       Popular
@@ -285,9 +286,12 @@ const HomePage = () => {
             </div>
           </div>
           <div className="flex justify-end mt-6">
-            <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
-              View All <FaChevronRight className="ml-1" />
-            </a>
+            <Link
+              to="/puja"
+              className="var-font-group flex items-center text-orange-400 hover:text-orange-400"
+            >
+              <ViewAllBtn text="View All" />
+            </Link>
           </div>
         </div>
       </section>
@@ -321,7 +325,7 @@ const HomePage = () => {
                   <img
                     src={img}
                     alt={name}
-                    className="w-full h-48 object-cover group-hover:brightness-110 group-hover:scale-110 transition-all duration-700 ease-out"
+                    className="w-full h-48 object-fit group-hover:brightness-110 group-hover:scale-110 transition-all duration-700 ease-out"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -358,6 +362,15 @@ const HomePage = () => {
             <FaChevronRight className="text-orange-500" />
           </button>
         </div>
+
+        <div className="w-full flex justify-end mt-6 mr-10">
+          <Link
+            to="/Prasaad"
+            className="var-font-group flex items-center text-orange-400 hover:text-orange-400"
+          >
+            <ViewAllBtn text="View All" />
+          </Link>
+        </div>
       </section>
 
 
@@ -378,7 +391,7 @@ const HomePage = () => {
                 onClick={() => handleTempleClick(temple)}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-100"
               >
-                <img src={temple.img_src} alt={temple.name} className="w-full h-48 object-cover" />
+                <img src={temple.img_src} alt={temple.name} className="w-full h-48 object-fit" />
                 <div className="p-5">
                   <h3 className="font-bold text-xl mb-2">{temple.name}</h3>
                   <p className="text-gray-600 text-sm mb-3">{temple.address}</p>
@@ -397,11 +410,13 @@ const HomePage = () => {
             ))}
           </div>
 
-          {/* "View All" link below the grid */}
           <div className="flex justify-end mt-6">
-            <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
-              View All <FaChevronRight className="ml-1" />
-            </a>
+            <Link
+              to="/temples"
+              className="var-font-group flex items-center text-orange-400 hover:text-orange-400"
+            >
+              <ViewAllBtn text="View All" />
+            </Link>
           </div>
         </div>
       </section>
@@ -484,7 +499,7 @@ const HomePage = () => {
                         <img
                           src={testimonial.avatar}
                           alt={testimonial.name}
-                          className="w-12 h-12 rounded-full object-cover"
+                          className="w-12 h-12 rounded-full object-" fit
                         />
                         <div className="ml-4">
                           <p className="font-semibold">{testimonial.name}</p>

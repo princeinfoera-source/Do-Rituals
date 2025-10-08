@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, useParams, Navigate } from "react-router-dom";
+import { Router, Routes, Route, Outlet, useParams, Navigate } from "react-router-dom";
 import DashboardLayout from "../layouts/layoutRestricted/DashboardLayout.jsx";
 import { useRole } from "../contexts/RoleContext.jsx";
 import { rolePathMap } from "../utils/rolePathMap.js";
@@ -15,6 +15,8 @@ import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 import ManagerDashboard from "../pages/manager/ManagerDashboard.jsx";
 import PriestDashboard from "../pages/priest/PriestDashboard.jsx";
 import DeliveryPartnerDashboard from "../pages/delivery_partner/DeliveryPartnerDashboard.jsx";
+
+import ScrollToTop from "../utils/ScrollToTop.jsx";
 
 function ProtectedRoute({ allowedRoles }) {
   const { role } = useRole();
@@ -43,27 +45,30 @@ function RoleBasedHome() {
 
 export default function AppRoutes() {
   return (
-    <Routes>
-      {/* Public and user routes */}
-      {userPublicRoutes}
+    <>
+      <ScrollToTop />
+      <Routes>
+        {/* Public and user routes */}
+        {userPublicRoutes}
 
-      {/* Protected dashboard routes */}
-      <Route element={<ProtectedRoute allowedRoles={Object.keys(rolePathMap)} />}>
-        <Route path="dashboard/:role" element={<DashboardLayout />}>
-          {/* Root index for dashboard role */}
-          <Route index element={<RoleBasedHome />} />
-          {/* Role specific routes */}
-          {adminRoutes}
-          {managerRoutes}
-          {priestRoutes}
-          {deliveryPartnerRoutes}
-          {/* Panel-level catch-all redirect to homepage */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+        {/* Protected dashboard routes */}
+        <Route element={<ProtectedRoute allowedRoles={Object.keys(rolePathMap)} />}>
+          <Route path="dashboard/:role" element={<DashboardLayout />}>
+            {/* Root index for dashboard role */}
+            <Route index element={<RoleBasedHome />} />
+            {/* Role specific routes */}
+            {adminRoutes}
+            {managerRoutes}
+            {priestRoutes}
+            {deliveryPartnerRoutes}
+            {/* Panel-level catch-all redirect to homepage */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* Global catch-all redirect to homepage (must come last) */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* Global catch-all redirect to homepage (must come last) */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
   );
 }

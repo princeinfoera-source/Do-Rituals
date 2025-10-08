@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
 import { templeData } from "../store/templeSampleData.js";
 import { prasadItems } from "../store/prasaad.js";
@@ -7,12 +7,15 @@ import { popularPuja } from "../store/templeSampleData.js";
 import DecimalStarRating from "../utils/starRating.jsx";
 import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
 import ImgGallery from "../components/img_gallery/ImgGallery.jsx";
+import ViewAllBtn from "../components/ViewAllBtn.jsx";
+import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();
 
 const TempleDetailPage = () => {
   const location = useLocation();
   const { templeName } = useParams();
+  const navigate = useNavigate();
   const [currencyInfo, setCurrencyInfo] = useState(null);
 
   useEffect(() => {
@@ -81,6 +84,15 @@ const TempleDetailPage = () => {
     return () => clearInterval(interval);
   }, [images.length]);
 
+  const handleClickPuja = (puja) => {
+    const pujaNameParam = puja.name.toLowerCase().replace(/\s+/g, "-");
+    navigate(`/puja/${pujaNameParam}`, { state: { puja } });
+  };
+
+  const handleSelectPuja = (service) => {
+    handleClick(service);
+  };
+
   return (
     <div className="overflow-x-hidden min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-gray-800 items-center">
 
@@ -93,31 +105,7 @@ const TempleDetailPage = () => {
       >
         <div className="absolute inset-0 bg-black/60 lg:bg-black/50" aria-hidden="true" />
 
-        {/* Horizontal scrolling prasad items */}
-        <div className="relative z-20 w-full overflow-hidden bg-white/10 backdrop-blur-md border-b border-white/20 py-3">
-          <div className="flex animate-slide whitespace-nowrap">
-            {[...prasadItems, ...prasadItems].map(({ id, name, img, price }, idx) => (
-              <div
-                key={`${id}-${idx}`}
-                className="inline-flex cursor-pointer items-center bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2 mx-2 shadow hover:scale-110 focus-visible:outline focus-visible:outline-yellow-400 transition-transform duration-300 min-w-[120px]"
-                tabIndex={0}
-                role="button"
-                aria-label={`Order ${name} priced ${price}`}
-              >
-                <img
-                  src={img}
-                  alt={name}
-                  className="w-10 h-10 rounded-md object-cover mr-2"
-                  loading="lazy"
-                />
-                <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-white truncate">{name}</span>
-                  <span className="text-[11px] text-yellow-300 font-bold">{price}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <ScrollingTopMarquee pujaData={prasadItems} />
 
         <div className="relative z-10 w-full py-12 flex flex-row items-start justify-between mx-auto px-16 gap-20">
           <div className="max-w-2xl space-y-4 text-white drop-shadow-lg text-left my-auto">
@@ -158,70 +146,60 @@ const TempleDetailPage = () => {
 
       </section>
 
-      <style>
-        {`
-  @keyframes slide {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .animate-slide {
-    display: flex;
-    width: max-content;
-    animation: slide 25s linear infinite;
-  }
-
-  /* Pause animation on hover */
-  .animate-slide:hover {
-    animation-play-state: paused;
-  }
-`}
-      </style>
-
       {/* Popular Services Section */}
-      <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10"
-        style={{ marginTop: "-40vh" }}
+      <section className="relative py-16 px-4 sm:px-6 bg-transparent z-10 -mt-[40vh] md:-mt-[40vh] sm:-mt-[40vh]"
       >
         <div className="max-w-7xl mx-auto">
-          {/* <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
-            Puja Offered
-          </h2> */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {popularPuja.map((service, idx) => (
-              <div
-                key={idx}
-                className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl hover:scale-105 transition-transform transition-shadow duration-300"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.name}
-                    className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
-                  />
-                  <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                    Popular
+          <div className="cursor-pointer flex gap-6 pt-5 overflow-x-auto w-full h-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 snap-start px-4">
+              {popularPuja.map((service, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white cursor-pointer rounded-2xl shadow-md overflow-hidden border border-gray-200 hover:border-orange-500 hover:shadow-2xl transition-shadow duration-300 snap-center"
+                  onClick={() => handleSelectPuja(service)}
+                >
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.name}
+                      className="w-full h-52 object-fit rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                    />
+                    <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                      Popular
+                    </div>
+                  </div>
+                  <div className="p-5 flex flex-col gap-2">
+                    <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl sm:text-2xl font-bold text-orange-600">
+                        {convertPrice(service.price)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <DecimalStarRating rating={service.rating} size={20} />
+                      <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClickPuja(service);
+                      }}
+                      className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg"
+                    >
+                      <FaShoppingCart className="mr-2" /> Book Now
+                    </button>
                   </div>
                 </div>
-                <div className="p-5 flex flex-col gap-2">
-                  <h3 className="font-bold text-lg sm:text-xl text-gray-800 truncate">{service.name}</h3>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl sm:text-2xl font-bold text-orange-600">{convertPrice(service.price)}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <DecimalStarRating rating={service.rating} size={20} />
-                    <span className="text-xs sm:text-sm text-gray-500">{service.bookings} booked</span>
-                  </div>
-                  <button className="cursor-pointer mt-3 w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm sm:text-base py-3 rounded-xl transition-colors duration-300 flex items-center justify-center shadow-md hover:shadow-lg">
-                    <FaShoppingCart className="mr-2" /> Book Now
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <div className="flex justify-end mt-6">
-            <a href="/temples" className="text-orange-600 hover:text-orange-800 font-semibold flex items-center">
-              View All <FaChevronRight className="ml-1" />
-            </a>
+            <Link
+              to="/puja"
+              className="var-font-group flex items-center text-orange-400 hover:text-orange-400"
+            >
+              <ViewAllBtn text="View All" />
+            </Link>
           </div>
         </div>
       </section>
@@ -272,7 +250,7 @@ const TempleDetailPage = () => {
             <img
               src={temple.images[0]}
               alt={temple.name}
-              className="rounded-2xl shadow-2xl w-full h-80 object-cover"
+              className="rounded-2xl shadow-2xl w-full h-80 object-fit"
             />
           </div> */}
         </div>

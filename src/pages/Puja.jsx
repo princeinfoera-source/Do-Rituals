@@ -10,6 +10,7 @@ import { popularPuja } from "../store/templeSampleData.js";
 import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
 import ScrollingBanner from "./ScrollingBanner.jsx";
 import { pujaList } from "../store/puja.js";
+import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
 
 const Puja = () => {
   const [selectedLocation, setSelectedLocation] = useState(mockLocations[0]);
@@ -87,49 +88,10 @@ const Puja = () => {
   };
 
   return (
-    <div className="w-full overflow-x-hidden min-h-screen font-inter bg-gradient-to-b from-yellow-50 via-yellow-100 to-yellow-200 to-yellow-200/0 pb-20">
-      <section className="relative w-full flex flex-col items-center pb-20">
-        <div className="relative z-20 w-full overflow-hidden bg-transparent backdrop-blur-md border-b border-white/20 py-3">
-          <div className="flex animate-slide whitespace-nowrap rounded-xl p-4">
-            {[...prasadItems, ...prasadItems].map(({ id, name, img, price }, idx) => (
-              <div
-                key={`${id}-${idx}`}
-                className="inline-flex cursor-pointer items-center bg-white/20 backdrop-blur-sm border border-white/20 rounded-xl px-3 py-2 mx-2 shadow hover:scale-110 focus-visible:outline focus-visible:outline-yellow-400 transition-transform duration-300 min-w-[120px]"
-                tabIndex={0}
-                role="button"
-                aria-label={`Order ${name} priced ${price}`}
-              >
-                <img
-                  src={img}
-                  alt={name}
-                  className="w-10 h-10 rounded-md object-cover mr-2"
-                  loading="lazy"
-                />
-                <div className="flex flex-col">
-                  <span className="text-xs font-semibold text-black truncate">{name}</span>
-                  <span className="text-[11px] text-yellow-600 font-bold">{price}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <div className="overflow-x-hidden min-h-screen">
+      <section className="relative w-full flex flex-col inset-0 bg-gradient-to-b from-yellow-50 via-yellow-100 to-yellow-200 to-yellow-200/0">
 
-        <style>
-          {`
-                        @keyframes slide {
-                            0% { transform: translateX(0); }
-                            100% { transform: translateX(-50%); }
-                        }
-                        .animate-slide {
-                            display: flex;
-                            width: max-content;
-                            animation: slide 25s linear infinite;
-                        }
-                        .animate-slide:hover {
-                            animation-play-state: paused;
-                        }
-                    `}
-        </style>
+        <ScrollingTopMarquee pujaData={prasadItems} />
 
         <div className="w-full pt-5">
           <SearchBox
@@ -143,8 +105,8 @@ const Puja = () => {
         </div>
       </section>
 
-      <section className="flex flex-col items-center h-auto w-full pb-20">
-        <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
+      <section className="mt-10 flex flex-col items-center h-auto w-full pb-10">
+        <h2 className="text-3xl sm:text-4xl font-extrabold mb-5 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
           Sacred Pujas
         </h2>
 
@@ -169,7 +131,7 @@ const Puja = () => {
                       <img
                         src={service.image}
                         alt={service.name}
-                        className="w-full h-52 object-cover rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
+                        className="w-full h-52 object-fit rounded-t-2xl transition-transform duration-300 ease-in-out hover:scale-105"
                       />
                       <div className="absolute top-3 right-3 bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
                         Popular
@@ -216,8 +178,8 @@ const Puja = () => {
       </div>
 
       <section className="py-12 px-6 bg-gradient-to-br from-yellow-50 to-orange-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 text-center text-gray-800 tracking-wide">
+        <div className="mt-10 flex flex-col items-center h-auto w-full pb-10">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
             Available Pujas
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -231,7 +193,7 @@ const Puja = () => {
                   <img
                     src={puja.img}
                     alt={puja.name}
-                    className="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-56 object-fit transform transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>

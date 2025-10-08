@@ -36,7 +36,7 @@ const TiltImage = ({ src, alt, width = "100%" }) => {
       <img
         src={src}
         alt={alt}
-        className="w-full h-full object-cover rounded-2xl transition-transform duration-150 ease-out bg-transparent"
+        className="w-full h-full object-fit rounded-2xl transition-transform duration-150 ease-out bg-transparent"
         style={{
           transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
           transformStyle: "preserve-3d",

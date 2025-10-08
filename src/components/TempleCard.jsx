@@ -7,7 +7,7 @@ const TempleCard = ({ temple }) => (
       <img
         src={temple.image}
         alt={temple.name}
-        className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110 group-hover:filter group-hover:brightness-90"
+        className="w-full h-56 object-fit transition-transform duration-300 group-hover:scale-110 group-hover:filter group-hover:brightness-90"
         loading="lazy"
       />
       {/* Rating badge with a clean, modern design */}
