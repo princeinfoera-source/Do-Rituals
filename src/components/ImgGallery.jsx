@@ -126,7 +126,7 @@ const ImgGallery = ({ images }) => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={() => navigateImage("prev")}
-                        className="cursor-pointer absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-accent transition-colors duration-200 z-10 bg-black bg-opacity-50 rounded-full p-3 transform hover:scale-110 hover:bg-opacity-80"
+                        className="cursor-pointer absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-accent transition-colors duration-200 z-10 bg-black bg-opacity-50 rounded-full p-3 hover:scale-110 hover:bg-opacity-80"
                         aria-label="Previous image"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

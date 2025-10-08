@@ -69,11 +69,11 @@ const OfferingCard = ({ card, isSelected, onToggle, icon }) => (
         <div className="flex justify-between items-center pt-2 border-t mt-auto">
             <span className="text-2xl font-extrabold text-green-700">₹{card.price.toFixed(2)}</span>
             {isSelected ? (
-                <button type="button" className="text-red-500 flex items-center gap-1 font-semibold text-sm">
+                <button type="button" className="text-red-500 flex items-center gap-1 font-semibold text-sm cursor-pointer">
                     <span className="text-lg">⊖</span> Remove
                 </button>
             ) : (
-                <button type="button" className="text-indigo-500 flex items-center gap-1 font-semibold text-sm">
+                <button type="button" className="text-indigo-500 flex items-center gap-1 font-semibold text-sm cursor-pointer">
                     <span className="text-lg">⊕</span> Add
                 </button>
             )}
@@ -244,7 +244,7 @@ const PujaDetail = () => {
                             <h3 className="text-xl font-bold text-gray-800 mb-3 border-b pb-2">Your Registration Includes</h3>
                             <div
                                 className="text-gray-700 text-base mb-6 whitespace-pre-line bg-blue-50 p-4 rounded-lg"
-                                dangerouslySetInnerHTML={{ __html: data.additionalInfo.replace(/\*/g, '•').replace(/\n/g, '<br/>') }}
+                                dangerouslySetInnerHTML={{ __html: data.additionalInfo.replace(/\*/g, '').replace(/\n/g, '<br/>') }}
                             ></div>
                         </div>
 

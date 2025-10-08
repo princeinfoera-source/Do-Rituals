@@ -1,10 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import ScrollingTopMarquee from "../components/ScrollingTopMarquee";
-import { popularPuja } from "../store/templeSampleData.js";
-import { testimonials, blogPosts, astrologyServices, consultationTopics, astrologerSchedule } from '../store/astrology.js';
-
-// --- INLINE SVG ICON DEFINITIONS (Replaces react-icons/fa) ---
-// These custom components ensure the code is self-contained and runnable.
+import ScrollingTopMarquee from "../../../components/ScrollingTopMarquee.jsx";
+import { popularPuja } from "../../../store/templeSampleData.js";
+import { testimonials, blogPosts, astrologyServices, consultationTopics, astrologerSchedule } from '../../../store/astrology.js';
 
 /** Star Icon (FaStar) */
 const StarIcon = (props) => (
@@ -132,7 +129,7 @@ const Modal = ({ isOpen, onClose, children }) => {
                 {/* Close Button */}
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer group-hover:rotate-360"
+                    className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer group-hover:rotate-90"
                     aria-label="Close booking form"
                 >
                     <XIcon className="w-6 h-6" />
@@ -652,7 +649,7 @@ const LiveConsultationFlow = ({ onClose }) => {
 
 const Astrology = () => {
     const [filter, setFilter] = useState('all');
-    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false); // New state for modal
+    const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
     const filteredServices = useMemo(() => {
         if (filter === 'all') {

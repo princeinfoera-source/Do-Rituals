@@ -3,7 +3,7 @@ import DashboardLayout from "../layouts/layoutRestricted/DashboardLayout.jsx";
 import { useRole } from "../contexts/RoleContext.jsx";
 import { rolePathMap } from "../utils/rolePathMap.js";
 
-import HomePage from "../pages/HomePage.jsx";
+import HomePage from "../pages/public/homepage/HomePage.jsx";
 
 import userPublicRoutes from "./publicRoutes.jsx";
 import adminRoutes from "./adminRoutes.jsx";

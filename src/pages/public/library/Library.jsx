@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { popularPuja } from "../store/templeSampleData.js";
-import ScrollingBanner from "./ScrollingBanner.jsx";
-import filtersData from "../store/Library.js";
+import { popularPuja } from "../../../store/templeSampleData.js";
+import ScrollingBanner from "../../../components/ScrollingBanner.jsx";
+import filtersData from "../../../store/Library.js";
 import ArtiPopup from "./ArtiPopup.jsx";
-import SearchBox, { mockLocations } from "../components/SearchBox.jsx";
+import SearchBox, { mockLocations } from "../../../components/SearchBox.jsx";
+import ScrollingTopMarquee from "../../../components/ScrollingTopMarquee.jsx";
+import { pujaOffersData } from "../../../store/puja.js";
 
 const Library = () => {
   const [selectedLocation, setSelectedLocation] = useState(mockLocations[0]);
@@ -17,12 +19,6 @@ const Library = () => {
   const handleSearchSubmit = () => {
     console.log(`Parent: SEARCH EXECUTED: Query='${searchQuery}', Location='${selectedLocation}'`);
   };
-  const offersData = [
-    "🪷 Free Prasad Delivery on orders above ₹999 🪷",
-    "⭐ Get 10% off on your first booking ⭐",
-    "🔔 Special discounts for senior citizens 🔔",
-    "📱 Download our app for exclusive offers 📱",
-  ];
 
   const [selected, setSelected] = useState("ALL");
   const [showPopup, setShowPopup] = useState(false);
@@ -54,54 +50,7 @@ const Library = () => {
       }}
     >
       <section className="relative w-full flex flex-col inset-0 bg-gradient-to-b from-yellow-50 via-yellow-100 to-yellow-200 to-yellow-200/0">
-        <div className="relative z-20 w-full overflow-hidden bg-white/20 backdrop-blur-md border-b border-white/30 py-3 shadow-sm">
-          <div className="flex animate-slide whitespace-nowrap">
-            {[...popularPuja, ...popularPuja, ...popularPuja].map(
-              ({ name, price, image }, idx) => (
-                <div
-                  key={`${name}-${idx}`}
-                  className="inline-flex cursor-pointer items-center bg-white/30 backdrop-blur-sm border border-yellow-200/40 rounded-xl px-3 py-2 mx-2 shadow hover:scale-105 transition-transform duration-300 min-w-[140px]"
-                >
-                  <img
-                    src={image}
-                    alt={name}
-                    className="w-10 h-10 rounded-md object-fit mr-2"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-xs font-semibold text-gray-800 truncate">
-                      {name}
-                    </span>
-                    <span className="text-[11px] text-yellow-700 font-bold">
-                      {price}
-                    </span>
-                  </div>
-                </div>
-              )
-            )}
-          </div>
-        </div>
-
-        {/* Keyframes and custom scrollbar styles */}
-        <style>
-          {`
-            @keyframes slide {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-33.33%); }
-            }
-            .animate-slide {
-              display: flex;
-              width: max-content;
-              animation: slide 25s linear infinite;
-            }
-            .animate-slide:hover {
-              animation-play-state: paused;
-            }
-            .no-scrollbar::-webkit-scrollbar { display: none; }
-            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-          `}
-        </style>
-
-        <hr className="border-t border-yellow-400 mt-6 mx-5 opacity-70" />
+        <ScrollingTopMarquee pujaData={popularPuja} />
 
         {/* Search / Header */}
         <div className="relative z-20 flex flex-col sm:flex-row items-center justify-evenly w-full h-auto px-2 gap-y-4 sm:gap-y-0 mt-5">
@@ -118,6 +67,7 @@ const Library = () => {
               searchQuery={searchQuery}
               onSearchQueryChange={setSearchQuery}
               onSearchSubmit={handleSearchSubmit}
+              placeholder={"Search aarti, bhajan for your favorite god"}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
             />
@@ -215,7 +165,7 @@ const Library = () => {
 
       {/* Scrolling Banner */}
       <div className="fixed bottom-0 left-0 w-full z-50">
-        <ScrollingBanner offers={offersData} />
+        <ScrollingBanner offers={pujaOffersData} />
       </div>
 
       {/* Arti Popup */}

@@ -1,16 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
-// Assume these imports exist and are correct in your project
-import SearchBox, { mockLocations } from "../components/SearchBox.jsx";
-import { prasadItems } from "../store/prasaad.js";
-import DecimalStarRating from "../utils/starRating.jsx";
-import { popularPuja } from "../store/templeSampleData.js";
-import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
-import ScrollingBanner from "./ScrollingBanner.jsx";
-import { pujaList } from "../store/puja.js";
-import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
+import { pujaOffersData } from "../../../store/puja.js";
+import SearchBox, { mockLocations } from "../../../components/SearchBox.jsx";
+import { prasadItems } from "../../../store/prasaad.js";
+import DecimalStarRating from "../../../utils/starRating.jsx";
+import { popularPuja } from "../../../store/templeSampleData.js";
+import { fetchCurrencyConversionInfo } from "../../../utils/detectCurrency.js";
+import ScrollingBanner from "../../../components/ScrollingBanner.jsx";
+import { pujaList } from "../../../store/puja.js";
+import ScrollingTopMarquee from "../../../components/ScrollingTopMarquee.jsx";
 
 const Puja = () => {
   const [selectedLocation, setSelectedLocation] = useState(mockLocations[0]);
@@ -53,17 +52,6 @@ const Puja = () => {
     }
   };
 
-  const offersData = [
-    "🌸 Get 15% off on Maha Rudrabhishek Puja 🌸",
-    "🕉️ Book Satyanarayan Katha and save ₹501 instantly 🕉️",
-    "🔥 Avail 10% discount on Navgraha Shanti Puja this month 🔥",
-    "💫 Perform Lakshmi Puja and get a free Prasad pack worth ₹299 💫",
-    "🌼 Book any two pujas together and get 20% off 🌼",
-    "🙏 Early morning slot bookings get additional 5% off 🙏",
-    "📿 Special 25% discount on personalized Sankalp Pujas 📿",
-    "🎉 Group booking (5+ members) — Flat 15% off on all Pujas 🎉",
-  ];
-
   const [currencyInfo, setCurrencyInfo] = useState(null);
 
   useEffect(() => {
@@ -99,10 +87,12 @@ const Puja = () => {
             selectedLocation={selectedLocation}
             onLocationChange={handleLocationChange}
             searchQuery={searchQuery}
+            placeholder={"Discover Pujas, find Temples, or explore all Jyotirlings"}
             onSearchQueryChange={setSearchQuery}
             onSearchSubmit={handleSearchSubmit}
           />
         </div>
+
       </section>
 
       <section className="mt-10 flex flex-col items-center h-auto w-full pb-10">
@@ -174,7 +164,7 @@ const Puja = () => {
       </section>
 
       <div className="fixed bottom-0 left-0 w-full z-50">
-        <ScrollingBanner offers={offersData} />
+        <ScrollingBanner offers={pujaOffersData} />
       </div>
 
       <section className="py-12 px-6 bg-gradient-to-br from-yellow-50 to-orange-50">
@@ -182,7 +172,7 @@ const Puja = () => {
           <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent curved-underline">
             Available Pujas
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="flex flex-wrap justify-center gap-6 max-w-full">
             {pujaList.map((puja, index) => (
               <div
                 key={index}

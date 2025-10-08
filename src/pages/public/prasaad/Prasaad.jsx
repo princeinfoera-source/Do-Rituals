@@ -1,8 +1,7 @@
-import React from 'react'
-import { templeData, popularPuja } from "../store/templeSampleData.js";
-import ScrollingTopMarquee from '../components/ScrollingTopMarquee.jsx';
+import { popularPuja } from "../../../store/templeSampleData.js";
+import ScrollingTopMarquee from '../../../components/ScrollingTopMarquee.jsx';
 
-const PanditOnCall = () => {
+const Prasaad = () => {
     return (
         <div className="overflow-x-hidden min-h-screen">
             {/* Hero Section */}
@@ -16,4 +15,4 @@ const PanditOnCall = () => {
     )
 }
 
-export default PanditOnCall
+export default Prasaad

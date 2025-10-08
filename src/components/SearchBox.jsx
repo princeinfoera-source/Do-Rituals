@@ -16,6 +16,7 @@ const SearchBox = ({
   locations: propLocations,
   selectedLocation: propSelectedLocation,
   onLocationChange: propOnLocationChange,
+  placeholder: placeholder,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isBtnActive, setIsBtnActive] = useState(false);
@@ -64,7 +65,7 @@ const SearchBox = ({
             type="search"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
-            placeholder="Discover Pujas, find Temples, or explore all Jyotirlings"
+            placeholder={placeholder}
             className="flex-1 min-w-0 px-4 py-3 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-base rounded-none"
             aria-label="Search for Temple, Jyotirling, or Puja"
             onFocus={() => setIsBtnActive(true)}

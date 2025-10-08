@@ -1,20 +1,20 @@
 // src/routes/publicRoutes.jsx
 import { Route } from "react-router-dom";
 import Layout from "../layouts/Layout.jsx";
-import HomePage from "../pages/HomePage.jsx";
-import Temples from "../pages/Temples.jsx";
-import TempleDetailPage from "../pages/TempleDetailPage.jsx";
-import Puja from "../pages/Puja.jsx";
-import DashboardLogin from "../pages/DashboardLogin.jsx";
-import Prasaad from "../pages/Prasaad.jsx";
-import Library from "../pages/Library.jsx";
-import Login from "../pages/Login.jsx";
-import Signup from "../pages/Signup.jsx";
-import SignUpRequest from "../pages/SignupRequest.jsx";
-import PujaDetail from "../pages/PujaDetail.jsx";
-import CheckoutPage from "../pages/CheckoutPage.jsx";
-import Astrology from "../pages/Astrology.jsx";
-import PanditOnCall from "../pages/PanditOnCall.jsx";
+import HomePage from "../pages/public/homepage/HomePage.jsx";
+import Temples from "../pages/public/temple/Temples.jsx";
+import TempleDetailPage from "../pages/public/temple/TempleDetailPage.jsx";
+import Puja from "../pages/public/puja/Puja.jsx";
+import DashboardLogin from "../pages/public/auth/DashboardLogin.jsx";
+import Prasaad from "../pages/public/prasaad/Prasaad.jsx";
+import Library from "../pages/public/library/Library.jsx";
+import Login from "../pages/public/auth/Login.jsx";
+import Signup from "../pages/public/auth/Signup.jsx";
+import SignUpRequest from "../pages/public/auth/SignupRequest.jsx";
+import PujaDetail from "../pages/public/puja/PujaDetail.jsx";
+import CheckoutPage from "../pages/public/puja/CheckoutPage.jsx";
+import Astrology from "../pages/public/astrology/Astrology.jsx";
+import PanditOnCall from "../pages/public/panditOnCall/PanditOnCall.jsx";
 
 export default [
   <Route path="/" element={<Layout />} key="layout">

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AdminDashboard from "./admin/AdminDashboard.jsx";
+import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 import TempleManagerDashboard from "../roles/TempleManager/TempleManagerDashboard.jsx";
 import PristDashboard from "../roles/Prist/PristDashboard.jsx";
 import DeliveryPartnerDashboard from "../roles/DeliveryPartner/DeliveryPartnerDashboard.jsx";

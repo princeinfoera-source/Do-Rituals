@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useLocation, useParams, useNavigate, Link } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
-import { templeData, popularPuja } from "../store/templeSampleData.js";
-import DecimalStarRating from "../utils/starRating.jsx";
-import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
-import templeMap from "../assets/imgs/templeMap.webp"
-import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
+import { templeData, popularPuja } from "../../../store/templeSampleData.js";
+import DecimalStarRating from "../../../utils/starRating.jsx";
+import { fetchCurrencyConversionInfo } from "../../../utils/detectCurrency.js";
+import templeMap from "../../../assets/imgs/templeMap.webp"
+import ScrollingTopMarquee from "../../../components/ScrollingTopMarquee.jsx";
 
 
 const Temples = () => {

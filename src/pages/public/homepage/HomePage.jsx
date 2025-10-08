@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import HomePageImg from "../assets/imgs/HomePageImg.png";
-import DownloadAppSection from "../components/DownloadAppSection.jsx";
-import Button from "../components/ExploreAnimatedButton.jsx";
-import { testimonials, templeData } from "../store/templeSampleData.js";
-import "./style.css";
-import ScrollingBanner from "./ScrollingBanner.jsx";
-import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
-import DecimalStarRating from "../utils/starRating.jsx";
-import { prasadItems } from "../store/prasaad.js";
-import { popularPuja } from "../store/templeSampleData.js"
-import SearchBox, { mockLocations } from "../components/SearchBox.jsx";
-import ViewAllBtn from "../components/ViewAllBtn.jsx";
+import HomePageImg from "../../../assets/imgs/HomePageImg.png";
+import DownloadAppSection from "../../../components/DownloadAppSection.jsx";
+import Button from "../../../components/ExploreAnimatedButton.jsx";
+import { testimonials, templeData } from "../../../store/templeSampleData.js";
+import ".././style.css";
+import ScrollingBanner from "../../../components/ScrollingBanner.jsx";
+import { fetchCurrencyConversionInfo } from "../../../utils/detectCurrency.js";
+import DecimalStarRating from "../../../utils/starRating.jsx";
+import { prasadItems } from "../../../store/prasaad.js";
+import { popularPuja } from "../../../store/templeSampleData.js"
+import SearchBox, { mockLocations } from "../../../components/SearchBox.jsx";
+import ViewAllBtn from "../../../components/ViewAllBtn.jsx";
 
 const CARD_WIDTH = 260;
 const VISIBLE_CARDS = 5;
@@ -226,6 +226,7 @@ const HomePage = () => {
             searchQuery={searchQuery}
             onSearchQueryChange={setSearchQuery}
             onSearchSubmit={handleSearchSubmit}
+            placeholder={"Discover Pujas, find Temples, or explore all Jyotirlings"}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRole } from "../contexts/RoleContext";
-import Logo from "../assets/imgs/doRituals.webp";
+import { useRole } from "../../../contexts/RoleContext";
+import Logo from "../../../assets/imgs/doRituals.webp";
 
 const roles = ["manager", "priest", "delivery-partner", "admin"];
 
@@ -30,7 +30,7 @@ const DashboardLogin = () => {
 
     localStorage.setItem("role", selectedRole);
     setRole(selectedRole);
-    navigate(`/dashboard/${ selectedRole }, {
+    navigate(`/dashboard/${selectedRole}, {
       state: { email, password, role: selectedRole },
       replace: true,
     }`);

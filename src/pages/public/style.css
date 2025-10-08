@@ -18,7 +18,7 @@
 }
 
 
-@keyframes scrollBanner {
+/* @keyframes scrollBanner {
   0% {
     transform: translateX(0%);
   }
@@ -30,16 +30,7 @@
 
 .animate-scrollBanner {
   animation: scrollBanner 30s linear infinite;
-}
-
-.typewriter {
-  animation: typing 4s steps(30, end), blink-caret 0.75s step-end infinite;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 4px solid white;
-  max-width: 100%;
-  /* Make sure it fits */
-}
+} */
 
 /* 
 @keyframes typing {
@@ -129,7 +120,6 @@
   -ms-user-select: none;
 }
 
-
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -166,3 +156,9 @@
 .popup-close {
   animation: fadeOutScale 400ms ease forwards;
 }
+
+
+
+
+/* To make cards in center if not completing the row  */
+/* flex flex-wrap justify-center gap-6 max-w-7xl */

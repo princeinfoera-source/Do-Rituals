@@ -1,14 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt, FaShoppingCart, FaChevronRight } from "react-icons/fa";
-import { templeData } from "../store/templeSampleData.js";
-import { prasadItems } from "../store/prasaad.js";
-import { popularPuja } from "../store/templeSampleData.js";
-import DecimalStarRating from "../utils/starRating.jsx";
-import { fetchCurrencyConversionInfo } from "../utils/detectCurrency.js";
-import ImgGallery from "../components/img_gallery/ImgGallery.jsx";
-import ViewAllBtn from "../components/ViewAllBtn.jsx";
-import ScrollingTopMarquee from "../components/ScrollingTopMarquee.jsx";
+import { templeData } from "../../../store/templeSampleData.js";
+import { prasadItems } from "../../../store/prasaad.js";
+import { popularPuja } from "../../../store/templeSampleData.js";
+import DecimalStarRating from "../../../utils/starRating.jsx";
+import { fetchCurrencyConversionInfo } from "../../../utils/detectCurrency.js";
+import ImgGallery from "../../../components/ImgGallery.jsx";
+import ViewAllBtn from "../../../components/ViewAllBtn.jsx";
+import ScrollingTopMarquee from "../../../components/ScrollingTopMarquee.jsx";
 
 const createSlug = (name) => name.replace(/\s+/g, "-").toLowerCase();
 

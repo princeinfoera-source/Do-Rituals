@@ -80,3 +80,14 @@ export const pujaList = [
     img: "/images/ayush.jpg",
   },
 ];
+
+ export const pujaOffersData = [
+      "🌸 Get 15% off on Maha Rudrabhishek Puja 🌸",
+      "🕉️ Book Satyanarayan Katha and save ₹501 instantly 🕉️",
+      "🔥 Avail 10% discount on Navgraha Shanti Puja this month 🔥",
+      "💫 Perform Lakshmi Puja and get a free Prasad pack worth ₹299 💫",
+      "🌼 Book any two pujas together and get 20% off 🌼",
+      "🙏 Early morning slot bookings get additional 5% off 🙏",
+      "📿 Special 25% discount on personalized Sankalp Pujas 📿",
+      "🎉 Group booking (5+ members) — Flat 15% off on all Pujas 🎉",
+    ];

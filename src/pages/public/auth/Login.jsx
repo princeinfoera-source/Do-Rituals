@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../assets/imgs/doRituals.webp";
+import Logo from "../../../assets/imgs/doRituals.webp";
 import Signup from "./Signup";
 import { GoogleLogin } from "@react-oauth/google";
-import bg from "../assets/imgs/temp/Baidyanath Dham.jpg";
+import bg from "../../../assets/imgs/temp/Baidyanath Dham.jpg";
 
 const Login = () => {
   const [showSignup, setShowSignup] = useState(false);

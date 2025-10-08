@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import aartiFooterImg from "../assets/imgs/aartiFooter.png";
-import "./style.css";
+import aartiFooterImg from "../../../assets/imgs/aartiFooter.png";
+import ".././style.css";
 
 const FONT_OPTIONS = [
   { name: "Default", value: "inherit" },
@@ -104,8 +104,8 @@ export default function ArtiPopup({ arti, onClose }) {
       >
         <div
           className={`${isSmallScreen
-              ? "w-full border-b border-gray-300"
-              : "md:flex flex-col border-r border-gray-300"
+            ? "w-full border-b border-gray-300"
+            : "md:flex flex-col border-r border-gray-300"
             } p-5 bg-gradient-to-b from-[#fff5dc] to-[#fdf2c3] transition-all ${settingsOpen ? "max-h-[900px]" : "max-h-12 overflow-hidden"
             }`}
           style={{ minWidth: isSmallScreen ? "100%" : "165px" }}

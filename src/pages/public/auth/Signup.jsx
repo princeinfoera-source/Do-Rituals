@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../assets/imgs/doRituals.webp";
+import Logo from "../../../assets/imgs/doRituals.webp";
 import { GoogleLogin } from "@react-oauth/google";
 
 const Signup = ({ onSignup, onSwitchToLogin }) => {
