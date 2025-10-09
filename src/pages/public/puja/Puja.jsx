@@ -177,7 +177,7 @@ const Puja = () => {
               <div
                 key={index}
                 className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group"
-                onClick={() => handleClick(puja)} // This line is now correct
+                onClick={() => handleClick(puja)}
               >
                 <div className="relative overflow-hidden">
                   <img

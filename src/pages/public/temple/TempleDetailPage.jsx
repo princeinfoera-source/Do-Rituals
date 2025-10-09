@@ -121,7 +121,7 @@ const TempleDetailPage = () => {
             </div>
           </div>
 
-          <div className="w-full max-w-2xl bg-white/20 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-lg text-white text-sm sm:text-base leading-relaxed space-y-5">
+          <div className="w-full max-w-2xl bg-white/20 backdrop-blur-md p-6 hidden md:block rounded-2xl border border-white/20 shadow-lg text-white text-sm sm:text-base leading-relaxed space-y-5">
             <u>
               <h2 className="text-lg sm:text-xl font-bold text-yellow-300 mb-3">
                 About this Temple
